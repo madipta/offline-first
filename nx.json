@@ -1,5 +1,5 @@
 {
-  "npmScope": "nx-test",
+  "npmScope": "offline-first",
   "affected": {
     "defaultBase": "master"
   },
@@ -22,5 +22,13 @@
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "web": {
+      "tags": []
+    },
+    "web-e2e": {
+      "tags": [],
+      "implicitDependencies": ["web"]
+    }
+  }
 }
