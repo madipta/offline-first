@@ -1,48 +1,37 @@
 import React from 'react';
-import { StyledApp } from './app.styled';
-import { ReactComponent as AddIcon } from './add.svg';
-import { ReactComponent as SearchIcon } from './search.svg';
-import { ReactComponent as MoreIcon } from './more.svg';
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import styled from 'styled-components';
+import Footer from './footer/footer';
+import Header from './header/header';
+import Main from './main/main';
+
+export const StyledApp = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  font-family: sans-serif;
+  height: 100vh;
+  max-width: 768px;
+  margin: 0 auto;
+`;
+
+const client = new ApolloClient({
+  link: new HttpLink({
+    uri: 'http://localhost:3333/graphql',
+  }),
+  cache: new InMemoryCache(),
+});
 
 export function App() {
   return (
-    <StyledApp>
-      <header>
-        <h1>Data Donatur</h1>
-      </header>
-      <main>
-        <div className="main-body">
-          <div className="main-row">
-            <div className="listNo">1</div>
-            <div className="listName">
-              <h3>Endang</h3>
-              <p>+62812400500600</p>
-            </div>
-            <div className="listTotal">900000</div>
-          </div>
-        </div>
-      </main>
-      <footer>
-        <div className="summary">
-          <div className="title">total:</div>
-          <div className="sum">700000000</div>
-        </div>
-        <ul className="nav">
-          <li>
-            <AddIcon className="add-icon"></AddIcon>
-            Add
-          </li>
-          <li>
-            <SearchIcon className="icon"></SearchIcon>
-            Search
-          </li>
-          <li>
-            <MoreIcon className="icon"></MoreIcon>
-            More
-          </li>
-        </ul>
-      </footer>
-    </StyledApp>
+    <ApolloProvider client={client}>
+      <StyledApp>
+        <Header />
+        <Main />
+        <Footer />
+      </StyledApp>
+    </ApolloProvider>
   );
 }
 

@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@offline-first/interfaces": ["libs/interfaces/src/index.ts"],
+      "@offline-first/services": ["libs/services/src/index.ts"],
+      "@offline-first/gql": ["libs/gql/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Donasi {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime 
+  name      String?
+  phone     String?
+  amount    Int
+  syncedAt  DateTime @default(now())
+  synced    Boolean  @default(true)
+}

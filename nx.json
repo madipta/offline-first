@@ -29,6 +29,18 @@
     "web-e2e": {
       "tags": [],
       "implicitDependencies": ["web"]
+    },
+    "interfaces": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
+    },
+    "services": {
+      "tags": []
+    },
+    "gql": {
+      "tags": []
     }
   }
 }
