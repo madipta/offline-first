@@ -17,5 +17,5 @@ model Donasi {
   phone     String?
   amount    Int
   syncedAt  DateTime @default(now())
-  synced    Boolean  @default(true)
+  sync      Boolean  @default(true)
 }

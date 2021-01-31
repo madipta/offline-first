@@ -65,7 +65,7 @@ const StyledAdd = styled.div`
     }
   }
 `;
-
+// add gql mutation
 export function Add(props: AddProps) {
   return (
     <StyledAdd>
@@ -82,7 +82,6 @@ export function Add(props: AddProps) {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
         }}
       >

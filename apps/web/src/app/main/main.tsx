@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Add from './add/add';
@@ -15,14 +15,16 @@ const StyledMain = styled.div`
   overflow-y: auto;
 `;
 
-export function Main(props: MainProps) {
-  return (
-    <StyledMain>
-      <Route path="/" exact render={() => <DonaturList />} />
-      <Route path="/add" exact render={() => <Add />} />
-      <Route path="/search" exact render={() => <Search />} />
-    </StyledMain>
-  );
+class Main extends Component {
+  render() {
+    return (
+      <StyledMain>
+        <Route path="/" exact render={() => <DonaturList />} />
+        <Route path="/add" exact render={() => <Add />} />
+        <Route path="/search" exact render={() => <Search />} />
+      </StyledMain>
+    );
+  }
 }
 
 export default Main;
