@@ -22,5 +22,5 @@ export class Donasi {
   syncedAt?: Date | null
 
   @Field()
-  synced: boolean
+  sync: boolean
 }

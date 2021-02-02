@@ -9,6 +9,7 @@ import { UserResolver } from './resolvers/donasi.resolver';
     ServicesModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'apps/api/src/schema.gql'),
+      installSubscriptionHandlers: true,
     }),
   ],
   providers: [DonasiService, UserResolver],

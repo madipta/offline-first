@@ -1,4 +1,5 @@
 import { createRxDatabase, addRxPlugin } from 'rxdb';
+import { DonasiSchema } from './donasi.schema';
 // import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election';
 // import { RxDBReplicationPlugin } from 'rxdb/plugins/replication';
 // import { RxDBNoValidatePlugin } from 'rxdb/plugins/no-validate';
@@ -11,40 +12,7 @@ addRxPlugin(require('pouchdb-adapter-idb'));
 // addRxPlugin(RxDBReplicationPlugin);
 // addRxPlugin(RxDBNoValidatePlugin);
 
-const donasiSchema = {
-  title: 'donasi schema',
-  version: 0,
-  type: 'object',
-  properties: {
-    id: {
-      type: 'string',
-      primary: true,
-    },
-    createdAt: {
-      type: 'number',
-    },
-    name: {
-      type: 'string',
-    },
-    phone: {
-      type: 'string',
-    },
-    amount: {
-      type: 'number',
-    },
-    syncedAt: {
-      type: 'number',
-    },
-    sync: {
-      type: 'number',
-    },
-  },
-  required: ['name', 'amount'],
-  indexes: ['name']
-};
-
-// const syncURL = 'http://' + window.location.hostname + ':3333/';
-// console.log('host: ' + syncURL);
+// const syncURL = 'http://localhost:3333/graphql';
 
 const createDatabase = async () => {
   const db = await createRxDatabase({
@@ -53,7 +21,7 @@ const createDatabase = async () => {
   });
   await db.addCollections({
     donasi: {
-      schema: donasiSchema,
+      schema: DonasiSchema,
     },
   });
   return db;
@@ -61,7 +29,9 @@ const createDatabase = async () => {
 
 let dbPromise = null;
 
-export const get = async () => {
-  if (!dbPromise) dbPromise = await createDatabase();
+export const GetDatabase = async () => {
+  if (!dbPromise) {
+    dbPromise = await createDatabase();
+  }
   return dbPromise;
 };

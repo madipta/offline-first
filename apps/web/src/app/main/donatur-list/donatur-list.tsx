@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gql } from 'apollo-boost';
+import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
-import * as Database from '../../database';
-
-/* eslint-disable-next-line */
-export interface DonaturListProps {}
+import * as Database from '../../database/create';
 
 const StyledDonaturList = styled.ul`
   width: 100%;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem .85rem;
 
   li {
     display: flex;
     align-items: center;
     width: 100%;
-    padding-bottom: 0.75rem;
-    margin-bottom: 0.75rem;
+    padding: .375rem .6rem;
+    margin: .375rem 0;
     border-style: solid;
     border-width: 0;
     border-color: #e7e7e7;
@@ -37,21 +35,23 @@ const StyledDonaturList = styled.ul`
       }
 
       p {
-        color: #6e6e6e;
         font-size: 0.75rem;
       }
     }
 
     .listTotal {
       font-size: 0.9rem;
-      color: #383838;
       padding-right: 0.3rem;
     }
+  }
+
+  li.sync {
+    color: #357753;
   }
 `;
 
 const GQL = gql`
-  query GetList {
+  query {
     pagelist(take: 20, skip: 0) {
       id
       createdAt
@@ -59,56 +59,53 @@ const GQL = gql`
       phone
       amount
       syncedAt
-      synced
+      sync
     }
   }
 `;
 
-class DonaturList extends Component {
-  state = {
-    pagelist: [],
-    loading: true,
-    error: null,
-  };
-  subs = [];
-  async componentDidMount() {
-    const db = await Database.get();
-    const sub = db.donasi
-      .find({
-        selector: {},
-        sort: [{ name: 'asc' }],
-      })
-      .$.subscribe((res) => {
-        if (!res) {
-          return;
-        }
-        console.dir(res);
-        this.setState({ pagelist: res, loading: false });
-      });
-    this.subs.push(sub);
-  }
-  componentWillUnmount() {
-    this.subs.forEach((sub) => sub.unsubscribe());
-  }
-  render() {
-    const { pagelist, loading, error } = this.state;
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
-    return (
-      <StyledDonaturList>
-        {pagelist.map((d, i) => (
-          <li key={i}>
-            <div className="listNo">{i + 1}</div>
-            <div className="listName">
-              <h3>{d.name}</h3>
-              <p>{d.phone}</p>
-            </div>
-            <div className="listTotal">{d.amount}</div>
-          </li>
-        ))}
-      </StyledDonaturList>
-    );
-  }
+function DonaturList() {
+  const [list, setList] = useState([]);
+  const [localdata, setLocalData] = useState([]);
+  const { data: serverData } = useQuery(GQL, {
+    fetchPolicy: 'cache-first',
+  });
+  useEffect(() => {
+    Database.GetDatabase().then((db) => {
+      if (db) {
+        const sub = db.donasi
+          .find({
+            selector: {},
+            sort: [{ createdAt: 'desc' }],
+          })
+          .exec()
+          .then((res) => {
+            setLocalData(res);
+          });
+      }
+    });
+  }, []);
+  useEffect(() => {
+    if (!serverData) {
+      setList(localdata);
+      return;
+    }
+    setList([...serverData.pagelist, ...localdata]);
+  }, [serverData, localdata]);
+  return (
+    <StyledDonaturList>
+      {list.map((d, i) => (
+        <li key={i} className={d.sync ? "sync" : ""}>
+          <div className="listNo">{i + 1}</div>
+          <div className="listName">
+            <h3>{d.name}</h3>
+            <p>{d.phone}</p>
+          </div>
+          <div className="listTotal">{d.amount}</div>
+        </li>
+      ))}
+    </StyledDonaturList>
+  );
 }
 
 export default DonaturList;

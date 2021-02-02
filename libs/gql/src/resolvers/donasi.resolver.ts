@@ -6,17 +6,19 @@ import {
   Args,
   InputType,
   Field,
+  Subscription,
 } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
+import { PubSub } from 'graphql-subscriptions';
 import { DonasiService } from '@offline-first/services';
 import { Donasi } from '../models/donasi';
 
 @InputType()
 class DonasiCreateInput {
   @Field()
-  createdAt: Date;
+  createdAt: number;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   name?: string | null;
 
   @Field(() => String, { nullable: true })
@@ -26,6 +28,8 @@ class DonasiCreateInput {
   amount: number;
 }
 
+const pubSub = new PubSub();
+
 @Resolver(Donasi)
 export class UserResolver {
   constructor(@Inject(DonasiService) private donasiService: DonasiService) {}
@@ -33,7 +37,7 @@ export class UserResolver {
   @Mutation(() => Donasi)
   async create(@Args('data') data: DonasiCreateInput): Promise<Donasi> {
     return this.donasiService.create({
-      createdAt: new Date(),
+      createdAt: new Date(data.createdAt),
       name: data.name,
       phone: data.phone,
       amount: data.amount,
@@ -49,4 +53,9 @@ export class UserResolver {
   async pagelist(@Args('skip') skip: number, @Args('take') take: number) {
     return this.donasiService.pagelist({ skip, take });
   }
+  
+  // @Subscription(returns => Comment)
+  // commentAdded() {
+  //   return pubSub.asyncIterator('commentAdded');
+  // }
 }

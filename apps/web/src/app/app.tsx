@@ -24,6 +24,14 @@ const client = new ApolloClient({
 });
 
 export function App() {
+  // window.addEventListener('load', function () {
+  //   window.addEventListener('online', function (e) {
+  //     console.log('online');
+  //   });
+  //   window.addEventListener('offline', function (e) {
+  //     console.log('offline');
+  //   });
+  // });
   return (
     <ApolloProvider client={client}>
       <StyledApp>

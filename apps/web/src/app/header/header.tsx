@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as BackIcon } from '../back.svg';
+import { ReactComponent as BackIcon } from '../icons/back.svg';
 
 /* eslint-disable-next-line */
 export interface HeaderProps {}

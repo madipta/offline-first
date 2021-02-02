@@ -9,7 +9,7 @@ type Donasi {
   phone: String
   amount: Float!
   syncedAt: DateTime
-  synced: Boolean!
+  sync: Boolean!
 }
 
 """
@@ -27,8 +27,8 @@ type Mutation {
 }
 
 input DonasiCreateInput {
-  createdAt: DateTime!
-  name: String
+  createdAt: Float!
+  name: String!
   phone: String
   amount: Float!
 }
