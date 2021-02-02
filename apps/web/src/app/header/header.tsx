@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as BackIcon } from '../icons/back.svg';
 
 /* eslint-disable-next-line */
 export interface HeaderProps {}
@@ -27,34 +26,12 @@ const StyledHeader = styled.div`
   }
 `;
 
-export function Header(props: HeaderProps) {
+export function Header() {
   return (
     <StyledHeader>
       <Route path="/" exact render={() => <h1>Tabel Donasi</h1>} />
-      <Route
-        path="/add"
-        exact
-        render={() => (
-          <>
-            <Link to="/">
-              <BackIcon className="back-icon"></BackIcon>
-            </Link>
-            <h1>Tambah Donasi</h1>
-          </>
-        )}
-      />
-      <Route
-        path="/search"
-        exact
-        render={() => (
-          <>
-            <Link to="/">
-              <BackIcon className="back-icon"></BackIcon>
-            </Link>
-            <h1>Pencarian</h1>
-          </>
-        )}
-      />
+      <Route path="/add" exact render={() => <h1>Tambah Donasi</h1>} />
+      <Route path="/search" exact render={() => <h1>Pencarian</h1>} />
     </StyledHeader>
   );
 }
