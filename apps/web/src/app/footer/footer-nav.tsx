@@ -16,9 +16,9 @@ export function FooterNav(props: NavHomeProps) {
       exact
       render={() => (
         <>
-          <LinkHome show={props.path !== "/"}></LinkHome>
-          <LinkAdd show={props.path !== "/add"}></LinkAdd>
-          <LinkSearch show={props.path !== "/search"}></LinkSearch>
+          <LinkHome show={props.path !== '/'}></LinkHome>
+          <LinkAdd show={props.path !== '/add'}></LinkAdd>
+          <LinkSearch show={props.path !== '/search'}></LinkSearch>
           <LinkMore></LinkMore>
         </>
       )}

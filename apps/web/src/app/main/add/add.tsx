@@ -107,6 +107,13 @@ type formError = {
 // add gql mutation
 
 function Add() {
+  const saveToLocal = (values) => {
+    Database.GetDatabase().then((db) => {
+      if (db) {
+        db.donasi.insert(values);
+      }
+    });
+  }
   return (
     <StyledAdd>
       <Formik
@@ -131,7 +138,7 @@ function Add() {
           values.amount = +values.amount;
           values.createdAt = Date.now();
           try {
-            const res = await this.db.donasi.insert(values);
+            saveToLocal(values);
           } catch (error) {
             console.log(error);
           } finally {

@@ -16,7 +16,7 @@ const StyledFooter = styled.div`
   border-width: 0px;
   border-top-width: 1px;
 
-  .nav {
+  > ul {
     display: flex;
     justify-content: center;
     list-style-type: none;
@@ -42,7 +42,7 @@ export function Footer() {
   return (
     <StyledFooter>
       <Summary></Summary>
-      <ul className="nav">
+      <ul>
         <FooterNav path="/"></FooterNav>
         <FooterNav path="/add"></FooterNav>
         <FooterNav path="/search"></FooterNav>

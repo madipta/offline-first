@@ -90,7 +90,7 @@ function DonaturList() {
       setList(localdata);
       return;
     }
-    setList([...serverData.pagelist, ...localdata]);
+    setList([...localdata, ...serverData.pagelist]);
   }, [serverData, localdata]);
   return (
     <StyledDonaturList>
