@@ -24,6 +24,7 @@ export const DonasiSchema = {
     },
     sync: {
       type: 'number',
+      default: 0
     },
   },
   required: ['name', 'amount'],

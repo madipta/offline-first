@@ -10,7 +10,7 @@ const StyledSummary = styled.div`
     display: flex;
     background-color: #f5f1e3;
     width: 100%;
-    padding: 0.5rem 1.2rem;
+    padding: 0.5rem 1.5rem;
 
     h3 {
       flex: 1;

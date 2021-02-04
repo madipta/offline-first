@@ -3,7 +3,8 @@
 # ------------------------------------------------------
 
 type Donasi {
-  id: ID!
+  sid: ID!
+  id: String!
   createdAt: DateTime!
   name: String
   phone: String
@@ -28,6 +29,7 @@ type Mutation {
 
 input DonasiCreateInput {
   createdAt: Float!
+  id: String!
   name: String!
   phone: String
   amount: Float!

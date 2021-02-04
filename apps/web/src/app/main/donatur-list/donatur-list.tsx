@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { gql } from 'apollo-boost';
-import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
-import * as Database from '../../database/create';
+import { useLocalDonasiList } from '../../data-access/local';
+import { useServeDonasiList } from '../../data-access/server';
 
 const StyledDonaturList = styled.ul`
   width: 100%;
-  padding: 1.5rem .85rem;
+  padding: 1.5rem 0.85rem;
 
   li {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: .375rem .6rem;
-    margin: .375rem 0;
+    padding: 0.375rem 0.6rem;
+    margin: 0.375rem 0;
     border-style: solid;
     border-width: 0;
     border-color: #e7e7e7;
     border-bottom-width: 1px;
 
     .listNo {
+      min-width: 1.5rem;
       padding-left: 0.3rem;
     }
 
@@ -38,70 +38,33 @@ const StyledDonaturList = styled.ul`
         font-size: 0.75rem;
       }
     }
-
-    .listTotal {
-      font-size: 0.9rem;
-      padding-right: 0.3rem;
-    }
   }
 
   li.sync {
-    color: #357753;
-  }
-`;
-
-const GQL = gql`
-  query {
-    pagelist(take: 20, skip: 0) {
-      id
-      createdAt
-      name
-      phone
-      amount
-      syncedAt
-      sync
-    }
+    color: #0a783d;
   }
 `;
 
 function DonaturList() {
   const [list, setList] = useState([]);
-  const [localdata, setLocalData] = useState([]);
-  const { data: serverData } = useQuery(GQL, {
-    fetchPolicy: 'cache-first',
-  });
+  const { data: localdata } = useLocalDonasiList();
+  const { data: serverData } = useServeDonasiList();
   useEffect(() => {
-    Database.GetDatabase().then((db) => {
-      if (db) {
-        const sub = db.donasi
-          .find({
-            selector: {},
-            sort: [{ createdAt: 'desc' }],
-          })
-          .exec()
-          .then((res) => {
-            setLocalData(res);
-          });
-      }
-    });
-  }, []);
-  useEffect(() => {
-    if (!serverData) {
-      setList(localdata);
-      return;
-    }
-    setList([...localdata, ...serverData.pagelist]);
+    const sData = serverData?.pagelist ?? [];
+    setList([...localdata, ...sData]);
   }, [serverData, localdata]);
   return (
     <StyledDonaturList>
       {list.map((d, i) => (
-        <li key={i} className={d.sync ? "sync" : ""}>
+        <li key={d.id} className={d.sync ? 'sync' : ''}>
           <div className="listNo">{i + 1}</div>
           <div className="listName">
-            <h3>{d.name}</h3>
+            <h3>
+              {d.name} {d.id}
+            </h3>
             <p>{d.phone}</p>
           </div>
-          <div className="listTotal">{d.amount}</div>
+          <div>{d.amount}</div>
         </li>
       ))}
     </StyledDonaturList>

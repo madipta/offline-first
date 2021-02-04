@@ -11,11 +11,12 @@ generator client {
 }
 
 model Donasi {
-  id        Int      @default(autoincrement()) @id
+  sid       Int       @default(autoincrement()) @id
+  id        String    @unique
   createdAt DateTime 
   name      String?
   phone     String?
   amount    Int
-  syncedAt  DateTime @default(now())
-  sync      Boolean  @default(true)
+  syncedAt  DateTime  @default(now())
+  sync      Boolean   @default(true)
 }

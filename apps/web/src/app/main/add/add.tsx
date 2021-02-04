@@ -1,12 +1,7 @@
-import React, { Component } from 'react';
-import { customAlphabet } from 'nanoid';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import React from 'react';
 import styled from 'styled-components';
-import * as Database from '../../database/create';
-import { IDonasi } from '../../database/donasi.model';
-
-/* eslint-disable-next-line */
-export interface AddProps {}
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useDonasiInsertFromServer } from '../../data-access/server';
 
 const StyledAdd = styled.div`
   margin-top: 1.9rem;
@@ -17,7 +12,7 @@ const StyledAdd = styled.div`
     align-items: center;
     width: 100%;
 
-    .p {
+    > div {
       margin-bottom: 1rem;
 
       label {
@@ -25,7 +20,7 @@ const StyledAdd = styled.div`
         align-items: center;
         width: 100%;
 
-        .caption {
+        b {
           color: #08423d;
           font-size: 0.95rem;
           line-height: 1.85rem;
@@ -48,7 +43,7 @@ const StyledAdd = styled.div`
       }
 
       .error {
-        color: #d44a40;
+        color: #d23d2a;
         text-align: right;
         padding-right: 0.2rem;
         margin-top: 0.4rem;
@@ -63,7 +58,7 @@ const StyledAdd = styled.div`
       font-weight: 600;
       line-height: 1.85rem;
       padding: 0.375rem 1.2rem;
-      border-radius: 0.125rem;
+      border-radius: 0.15rem;
       margin-top: 1.5rem;
     }
 
@@ -72,48 +67,14 @@ const StyledAdd = styled.div`
     }
   }
 `;
+
 type formError = {
   name?: string;
   amount?: string;
 };
 
-// Database.GetDatabase().then((db) => {
-//   if (db) {
-//     serverData.pagelist.forEach((item) => {
-//       console.log(item);
-//       db.donasi
-//         .findOne({
-//           selector: {
-//             id: item.id,
-//           },
-//         })
-//         .exec()
-//         .then((doc) => {
-//           if (!doc) {
-//             db.donasi.insert({
-//               amount: item.amount,
-//               createdAt: Date.parse(item.createdAt),
-//               id: item.id,
-//               name: item.name,
-//               phone: item.phone || '',
-//               sync: item.sync ? 1 : 0,
-//               syncedAt: Date.parse(item.syncedAt),
-//             });
-//           }
-//         });
-//     });
-//   }
-// });
-// add gql mutation
-
 function Add() {
-  const saveToLocal = (values) => {
-    Database.GetDatabase().then((db) => {
-      if (db) {
-        db.donasi.insert(values);
-      }
-    });
-  }
+  const [addDonasi] = useDonasiInsertFromServer();
   return (
     <StyledAdd>
       <Formik
@@ -129,16 +90,9 @@ function Add() {
           }
           return errors;
         }}
-        onSubmit={async (values: IDonasi, { setSubmitting, resetForm }) => {
-          const nanoid = customAlphabet(
-            '1234567890abcdefhijklmnopqrstuvwxyz',
-            10
-          );
-          values.id = nanoid();
-          values.amount = +values.amount;
-          values.createdAt = Date.now();
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
-            saveToLocal(values);
+            addDonasi({ variables: { ...values }});
           } catch (error) {
             console.log(error);
           } finally {
@@ -149,22 +103,22 @@ function Add() {
       >
         {({ isSubmitting }) => (
           <Form>
-            <div className="p">
+            <div>
               <label>
-                <span className="caption">Name</span>
+                <b>Name</b>
                 <Field type="text" name="name" />
               </label>
               <ErrorMessage name="name" component="div" className="error" />
             </div>
-            <div className="p">
+            <div>
               <label>
-                <span className="caption">Phone</span>
+                <b>Phone</b>
                 <Field type="text" name="phone" />
               </label>
             </div>
-            <div className="p">
+            <div>
               <label>
-                <span className="caption">Amount</span>
+                <b>Amount</b>
                 <Field type="text" name="amount" className="number" />
               </label>
               <ErrorMessage name="amount" component="div" className="error" />

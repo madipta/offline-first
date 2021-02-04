@@ -12,8 +12,6 @@ addRxPlugin(require('pouchdb-adapter-idb'));
 // addRxPlugin(RxDBReplicationPlugin);
 // addRxPlugin(RxDBNoValidatePlugin);
 
-// const syncURL = 'http://localhost:3333/graphql';
-
 const createDatabase = async () => {
   const db = await createRxDatabase({
     name: 'donasidb',
@@ -30,8 +28,9 @@ const createDatabase = async () => {
 let dbPromise = null;
 
 export const GetDatabase = async () => {
-  if (!dbPromise) {
-    dbPromise = await createDatabase();
-  }
-  return dbPromise;
+  return (dbPromise = dbPromise ?? (await createDatabase()));
+};
+
+export const GetDonasi = async () => {
+  return (await GetDatabase()).donasi;
 };

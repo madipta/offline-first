@@ -8,11 +8,10 @@ import { UserResolver } from './resolvers/donasi.resolver';
   imports: [
     ServicesModule,
     GraphQLModule.forRoot({
-      autoSchemaFile: join(process.cwd(), 'apps/api/src/schema.gql'),
+      autoSchemaFile: join(process.cwd(), 'prisma/schema.gql'),
       installSubscriptionHandlers: true,
     }),
   ],
   providers: [DonasiService, UserResolver],
-  exports: [],
 })
 export class GqlModule {}

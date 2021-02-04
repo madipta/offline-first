@@ -1,6 +1,10 @@
 import React from 'react';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+} from '@apollo/client';
 import styled from 'styled-components';
 import Footer from './footer/footer';
 import Header from './header/header';

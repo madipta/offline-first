@@ -4,7 +4,10 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 @ObjectType()
 export class Donasi {
   @Field(() => ID)
-  id: number
+  sid: number
+
+  @Field()
+  id: string
 
   @Field()
   createdAt: Date
