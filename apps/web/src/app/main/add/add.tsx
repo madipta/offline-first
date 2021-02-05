@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useDonasiInsertFromServer } from '../../data-access/server';
+import { InsertDonasi } from '../../data-access/local';
 
 const StyledAdd = styled.div`
   margin-top: 1.9rem;
@@ -74,7 +74,6 @@ type formError = {
 };
 
 function Add() {
-  const [addDonasi] = useDonasiInsertFromServer();
   return (
     <StyledAdd>
       <Formik
@@ -92,7 +91,7 @@ function Add() {
         }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
-            addDonasi({ variables: { ...values }});
+            InsertDonasi(values);
           } catch (error) {
             console.log(error);
           } finally {

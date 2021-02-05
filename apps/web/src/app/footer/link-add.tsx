@@ -9,10 +9,9 @@ export interface LinkAddProps {
 }
 
 const StyledLinkAdd = styled.li`
-  .add-icon {
+  svg {
     width: 2rem;
     height: 2rem;
-    margin-bottom: 0.2rem;
   }
 `;
 
@@ -21,7 +20,7 @@ export function LinkAdd(props: LinkAddProps) {
   return (
     <StyledLinkAdd>
       <Link to="/add">
-        <AddIcon className="add-icon"></AddIcon>
+        <AddIcon></AddIcon>
         Add
       </Link>
     </StyledLinkAdd>

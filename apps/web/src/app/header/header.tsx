@@ -10,18 +10,11 @@ const StyledHeader = styled.div`
   align-items: center;
   background-color: #1b9aaa;
   width: 100%;
-  padding: 0.875rem;
-
-  .back-icon {
-    color: #fff;
-    width: 1.2rem;
-    height: 1.4rem;
-    margin-right: 0.6rem;
-  }
+  padding: 0.825rem;
 
   h1 {
-    font-size: 1.275rem;
-    font-weight: 600;
+    font-size: 1.25rem;
+    font-weight: 700;
     color: white;
   }
 `;

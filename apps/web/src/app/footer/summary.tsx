@@ -2,22 +2,19 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-/* eslint-disable-next-line */
-export interface SummaryProps {}
-
 const StyledSummary = styled.div`
   > div {
     display: flex;
     background-color: #f5f1e3;
     width: 100%;
-    padding: 0.5rem 1.5rem;
+    padding: .5rem .75rem;
 
     h3 {
       flex: 1;
       color: #960;
       font-size: 0.9rem;
       text-align: right;
-      margin-right: 0.5rem;
+      margin-right: 0.75rem;
     }
 
     em {
@@ -27,7 +24,7 @@ const StyledSummary = styled.div`
   }
 `;
 
-export function Summary(props: SummaryProps) {
+export function Summary() {
   return (
     <StyledSummary>
       <Route
@@ -36,7 +33,7 @@ export function Summary(props: SummaryProps) {
         render={() => (
           <div>
             <h3>total:</h3>
-            <em>700000000</em>
+            <em>0</em>
           </div>
         )}
       />

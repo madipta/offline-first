@@ -9,10 +9,9 @@ export interface LinkSearchProps {
 }
 
 const StyledLinkSearch = styled.li`
-  .icon {
+  svg {
     width: 1.3rem;
     height: 2rem;
-    margin-bottom: 0.2rem;
   }
 `;
 
@@ -21,7 +20,7 @@ export function LinkSearch(props: LinkSearchProps) {
   return (
     <StyledLinkSearch>
       <Link to="/search">
-        <SearchIcon className="icon"></SearchIcon>
+        <SearchIcon></SearchIcon>
         Search
       </Link>
     </StyledLinkSearch>

@@ -1,5 +1,5 @@
 # Offline-First
 
-Sample offline first using Nx monorepo, React, RxDb, NestJs, Socket.io, Prisma, GraphQl, PostgreSql
+Sample offline first using Nx monorepo, React, RxDb, NestJs, Prisma, GraphQl, PostgreSql
 
 (still on progress)

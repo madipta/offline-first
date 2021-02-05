@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import DonaturList from './donatur-list';
 
+import ListItem from './list-item';
 
-describe('DonaturList', () => {
+describe('ListItem', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<DonaturList />);
+    const { baseElement } = render(<ListItem />);
     expect(baseElement).toBeTruthy();
   });
 });

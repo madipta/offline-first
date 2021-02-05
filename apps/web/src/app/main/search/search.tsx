@@ -2,46 +2,50 @@ import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import styled from 'styled-components';
 
-/* eslint-disable-next-line */
-export interface SearchProps {}
-
 const StyledSearch = styled.div`
-  display: flex;
-  flex-direction: column;
-  place-content: center;
-  height: 100%;
 
   form {
     display: flex;
+    flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-top: 1.5rem;
 
-    div {
+    > div {
       display: flex;
-      justify-items: center;
       width: 90%;
       max-width: 28rem;
-      margin: 0 auto;
+      margin: .4rem auto;
 
-      input {
+      input[type="radio"] {
+        margin-left: .5rem;
+      }
+
+      > span {
+        line-height: 1.15rem;
+        margin-left: .3rem;
+        margin-right: .5rem;
+      }
+
+      input[name="search"] {
         color: #222;
         flex-grow: 1;
         font-size: 1.02rem;
         line-height: 1.85rem;
-        padding: 0.375rem 0.9rem;
+        padding: 0.175rem 0.9rem;
         border: 1px solid #cfd8d4;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
+        border-right: none;
       }
 
       button {
         cursor: pointer;
         background-color: #f74a38;
         color: #fff;
-        font-size: 0.95rem;
-        font-weight: 600;
+        font-size: 1.02rem;
         line-height: 1.85rem;
-        padding: 0.375rem 1.2rem;
+        padding: 0.175rem 1.2rem;
         border: 1px solid #f74a38;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
@@ -57,11 +61,11 @@ const StyledSearch = styled.div`
   }
 `;
 
-export function Search(props: SearchProps) {
+export function Search() {
   return (
     <StyledSearch>
       <Formik
-        initialValues={{ search: '' }}
+        initialValues={{ search: '', source: 'server' }}
         validate={(values) => {
           const errors = { search: null };
           if (!values.search) {
@@ -76,11 +80,17 @@ export function Search(props: SearchProps) {
       >
         {({ isSubmitting }) => (
           <Form>
+          <div>
+            <Field type="text" name="search" value="" />
+            <button type="submit" disabled={isSubmitting}>
+              Search
+            </button>
+          </div>
             <div>
-              <Field type="text" name="search" value="xxxx" />
-              <button type="submit" disabled={isSubmitting}>
-                Filter
-              </button>
+              <Field type="radio" name="source" value="server" />
+              <span>Saved</span>
+              <Field type="radio" name="source" value="local" />
+              <span>Draft</span>
             </div>
             <ErrorMessage name="search" component="div" className="error" />
           </Form>

@@ -6,10 +6,9 @@ import { ReactComponent as MoreIcon } from '../icons/more.svg';
 export interface LinkMoreProps {}
 
 const StyledLinkMore = styled.li`
-  .icon {
+  svg {
     width: 1.3rem;
     height: 2rem;
-    margin-bottom: 0.2rem;
   }
 `;
 
@@ -17,7 +16,7 @@ export function LinkMore(props: LinkMoreProps) {
   return (
     <StyledLinkMore>
       <div className="Link">
-        <MoreIcon className="icon"></MoreIcon>
+        <MoreIcon></MoreIcon>
         More
       </div>
     </StyledLinkMore>

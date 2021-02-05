@@ -12,7 +12,6 @@ const StyledLinkHome = styled.li`
   svg {
     width: 1.3rem;
     height: 2rem;
-    margin-bottom: 0.2rem;
   }
 `;
 
