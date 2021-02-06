@@ -19,7 +19,7 @@ export function FooterNav(props: NavHomeProps) {
           <LinkHome show={props.path !== '/'}></LinkHome>
           <LinkAdd show={props.path !== '/add'}></LinkAdd>
           <LinkSearch show={props.path !== '/search'}></LinkSearch>
-          <LinkSync></LinkSync>
+          <LinkSync show={props.path !== '/sync'}></LinkSync>
         </>
       )}
     />

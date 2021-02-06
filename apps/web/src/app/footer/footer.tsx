@@ -46,6 +46,7 @@ export function Footer() {
         <FooterNav path="/"></FooterNav>
         <FooterNav path="/add"></FooterNav>
         <FooterNav path="/search"></FooterNav>
+        <FooterNav path="/sync"></FooterNav>
       </ul>
     </StyledFooter>
   );

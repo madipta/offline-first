@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { DonasiService, ServicesModule } from '@offline-first/services';
-import { UserResolver } from './resolvers/donasi.resolver';
+import { DonasiResolver } from './resolvers/donasi.resolver';
 
 @Module({
   imports: [
@@ -12,6 +12,6 @@ import { UserResolver } from './resolvers/donasi.resolver';
       installSubscriptionHandlers: true,
     }),
   ],
-  providers: [DonasiService, UserResolver],
+  providers: [DonasiService, DonasiResolver],
 })
 export class GqlModule {}

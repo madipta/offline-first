@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../icons/search.svg';
 
-/* eslint-disable-next-line */
 export interface LinkSearchProps {
   show: boolean;
 }

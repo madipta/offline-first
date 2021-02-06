@@ -7,16 +7,17 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["createMany"]
 }
 
 model Donasi {
-  sid       Int       @default(autoincrement()) @id
-  id        String    @unique
-  createdAt DateTime 
+  sid       Int      @id @default(autoincrement())
+  id        String   @unique
+  createdAt DateTime
   name      String?
   phone     String?
   amount    Int
-  syncedAt  DateTime  @default(now())
-  sync      Boolean   @default(true)
+  syncedAt  DateTime @default(now())
+  sync      Boolean  @default(true)
 }

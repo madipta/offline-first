@@ -9,8 +9,16 @@ import styled from 'styled-components';
 import Footer from './footer/footer';
 import Header from './header/header';
 import Main from './main/main';
+import { DonasiSumProvider } from './app.context';
 
-export const StyledApp = styled.div`
+const client = new ApolloClient({
+  link: new HttpLink({
+    uri: 'http://localhost:3333/graphql',
+  }),
+  cache: new InMemoryCache(),
+});
+
+const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -19,13 +27,6 @@ export const StyledApp = styled.div`
   max-width: 768px;
   margin: 0 auto;
 `;
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: 'http://localhost:3333/graphql',
-  }),
-  cache: new InMemoryCache(),
-});
 
 export function App() {
   // window.addEventListener('load', function () {
@@ -37,13 +38,15 @@ export function App() {
   //   });
   // });
   return (
-    <ApolloProvider client={client}>
-      <StyledApp>
-        <Header />
-        <Main />
-        <Footer />
-      </StyledApp>
-    </ApolloProvider>
+    <DonasiSumProvider>
+      <ApolloProvider client={client}>
+        <StyledApp>
+          <Header />
+          <Main />
+          <Footer />
+        </StyledApp>
+      </ApolloProvider>
+    </DonasiSumProvider>
   );
 }
 

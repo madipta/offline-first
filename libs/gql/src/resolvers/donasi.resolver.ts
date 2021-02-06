@@ -10,39 +10,39 @@ import {
 import { Inject } from '@nestjs/common';
 import { DonasiService } from '@offline-first/services';
 import { Donasi } from '../models/donasi';
+import { DonasiCreateInput } from '../models/donasi-create-input';
+import { BatchPayload } from '../models/batch-payload';
+import { Prisma } from '@prisma/client';
 
 @InputType()
-class DonasiCreateInput {
-  @Field()
-  createdAt: number;
-
-  @Field(() => String)
-  id: string;
-
-  @Field(() => String)
-  name?: string | null;
-
-  @Field(() => String, { nullable: true })
-  phone?: string | null;
-
-  @Field()
-  amount: number;
+class DonasiCreateInputs {
+  @Field(() => [DonasiCreateInput])
+  batch: DonasiCreateInput[];
 }
 
+const donasiMapper = (data: DonasiCreateInput) => {
+  const { createdAt, ...rest } = data;
+  return {
+    ...rest,
+    createdAt: new Date(createdAt),
+  };
+};
 
 @Resolver(Donasi)
-export class UserResolver {
+export class DonasiResolver {
   constructor(@Inject(DonasiService) private donasiService: DonasiService) {}
 
   @Mutation(() => Donasi)
   async create(@Args('data') data: DonasiCreateInput): Promise<Donasi> {
-    return this.donasiService.create({
-      id: data.id,
-      createdAt: new Date(data.createdAt),
-      name: data.name,
-      phone: data.phone,
-      amount: data.amount,
-    });
+    return this.donasiService.create(donasiMapper(data));
+  }
+
+  @Mutation(() => BatchPayload)
+  async createMany(
+    @Args('data') data: DonasiCreateInputs
+  ): Promise<BatchPayload> {
+    const dataFixed = data.batch.map((val) => donasiMapper(val));
+    return this.donasiService.createMany(dataFixed);
   }
 
   @Query(() => Donasi, { nullable: true })
@@ -52,6 +52,10 @@ export class UserResolver {
 
   @Query(() => [Donasi])
   async pagelist(@Args('skip') skip: number, @Args('take') take: number) {
-    return this.donasiService.pagelist({ skip, take });
+    return this.donasiService.pagelist({
+      skip,
+      take,
+      orderBy: { syncedAt: 'desc' },
+    });
   }
 }

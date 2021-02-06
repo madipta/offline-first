@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as SyncIcon } from '../icons/sync.svg';
 
-/* eslint-disable-next-line */
-export interface LinkSyncProps {}
+export interface LinkSyncProps {
+  show: boolean;
+}
 
 const StyledLinkSync = styled.li`
   svg {
@@ -14,6 +15,7 @@ const StyledLinkSync = styled.li`
 `;
 
 export function LinkSync(props: LinkSyncProps) {
+  if (!props.show) return <></>;
   return (
     <StyledLinkSync>
       <Link to="/sync">

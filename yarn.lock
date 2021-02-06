@@ -2568,29 +2568,29 @@
     consola "^2.15.0"
     node-fetch "^2.6.1"
 
-"@prisma/cli@2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@prisma/cli/-/cli-2.15.0.tgz#a979a67dbd606a966cf475686170128562590713"
-  integrity sha512-sF2mgn5oH5fL9/CKxS0tqojf0rK2BKODlEUqL+2s3YZqvJRSt4iFpiyjgajyd0wyTyv1k9LDHTV0yOD1mXDBsA==
+"@prisma/cli@^2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@prisma/cli/-/cli-2.16.0.tgz#78bc00ac31495a40de27dc4e7822e748d07aef83"
+  integrity sha512-sgZVHyTN8tC8rneJ17+p8XWoS2bzt1BBADAf2rbvl5sQpVQo7YD4cGZHJS01i+tOlGb05jGAyY5NvuHI5251dw==
   dependencies:
-    "@prisma/engines" "2.15.0-25.e51dc3b5a9ee790a07104bec1c9477d51740fe54"
+    "@prisma/engines" "2.16.0-43.a973e24a4e5194f8fe3301bfa7ff982b24f97c05"
 
-"@prisma/client@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-2.15.0.tgz#41ee22c60778b54aec0f6d4832c2d35fbf9eb423"
-  integrity sha512-3j4OoLpAGF104KAenUFJM9sU2+4jRP+RlrlYssBHkwBf+/5+2ihSpcmFiWIw1vXNRdmZtivjwhjcVtmjZPJktw==
+"@prisma/client@^2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-2.16.0.tgz#811dcb8310544876b88a0bbd230a2f65c58a9c01"
+  integrity sha512-q02/IKwUIN+9Kl+Oayfb6x38NQ4ROvLoPSE+V0DRlJehTAJoxgRUWuPwaiOkksVnnmK4XHvKS/TR5EmQHUVxYw==
   dependencies:
-    "@prisma/engines-version" "2.15.0-25.e51dc3b5a9ee790a07104bec1c9477d51740fe54"
+    "@prisma/engines-version" "2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1"
 
-"@prisma/engines-version@2.15.0-25.e51dc3b5a9ee790a07104bec1c9477d51740fe54":
-  version "2.15.0-25.e51dc3b5a9ee790a07104bec1c9477d51740fe54"
-  resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-2.15.0-25.e51dc3b5a9ee790a07104bec1c9477d51740fe54.tgz#d9c887bc8f30d1f107c9021b2565a8672d62622d"
-  integrity sha512-KDxk7Zsc9tDoShCE7v+O1SnCUTUkMdfezjbuz9CBvdEBGMtYLgyHaZAO8M038uqy8KjgwV9PzyoLqvVfzfsngg==
+"@prisma/engines-version@2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1":
+  version "2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1"
+  resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-2.16.0-44.854c8ba7f0dce66f115af36af24e66989a8c02a1.tgz#6df1a9a9f4c711e18861be2de4c4f0e363d0aae9"
+  integrity sha512-/gcqWJDXoo0vsYi7fhdhdyjfMXxJPjKl8K7oc/k2BH7IQuXUB1A+ZnFgqRcT/rKuyU4xH8+N+l+C4boWlqYvgQ==
 
-"@prisma/engines@2.15.0-25.e51dc3b5a9ee790a07104bec1c9477d51740fe54":
-  version "2.15.0-25.e51dc3b5a9ee790a07104bec1c9477d51740fe54"
-  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.15.0-25.e51dc3b5a9ee790a07104bec1c9477d51740fe54.tgz#3093ace7c09cf694214727c4e67109f2a2d8855a"
-  integrity sha512-AgPxAWtwYhhTNEEsV4lK63HTe9z0GAGL3ofMr2B0TncACmzi9lhdun9TTNie38Oy/3DLfr71TUHKUpV8QjOKUw==
+"@prisma/engines@2.16.0-43.a973e24a4e5194f8fe3301bfa7ff982b24f97c05":
+  version "2.16.0-43.a973e24a4e5194f8fe3301bfa7ff982b24f97c05"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.16.0-43.a973e24a4e5194f8fe3301bfa7ff982b24f97c05.tgz#f3cbfe5aed6ec437fe30c5b6a503e925cf86088a"
+  integrity sha512-vwZhfa/w+2mzoKMquCogpegLKuZnu/RmhVMDUYxuSSw8o+tjanYpuvJYImioDZ+FoU1vTawxqMc4kfD1yKYRlA==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -2916,11 +2916,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/bcrypt@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/bcrypt/-/bcrypt-3.0.0.tgz#851489a9065a067cb7f3c9cbe4ce9bed8bba0876"
-  integrity sha512-nohgNyv+1ViVcubKBh0+XiNJ3dO8nYu///9aJ4cgSqv70gBL+94SNy/iC2NLzKPT2Zt/QavrOkBVbZRLZmw6NQ==
-
 "@types/body-parser@*", "@types/body-parser@1.19.0":
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.0.tgz#0685b3c47eb3006ffed117cdd55164b61f80538f"
@@ -2928,13 +2923,6 @@
   dependencies:
     "@types/connect" "*"
     "@types/node" "*"
-
-"@types/bull@^3.14.4":
-  version "3.14.4"
-  resolved "https://registry.yarnpkg.com/@types/bull/-/bull-3.14.4.tgz#8a787ad4582b1a6cf2bfa6cca5f72428330c455e"
-  integrity sha512-XAYSV6A/r9GX+TgWwjF0WgpKK9/WAiSfVe3q6+2JrRW+3hLDjIU5MQL9HQZet3my98VA3kNWjEYrJCeRmJ5a5w==
-  dependencies:
-    "@types/ioredis" "*"
 
 "@types/cache-manager@^2.10.3":
   version "2.10.3"
@@ -3135,13 +3123,6 @@
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@types/http-errors/-/http-errors-1.8.0.tgz#682477dbbbd07cd032731cb3b0e7eaee3d026b69"
   integrity sha512-2aoSC4UUbHDj2uCsCxcG/vRMXey/m17bC7UwitVm5hn22nI8O8Y9iDpA76Orc+DWkQ4zZrOKEshCqR/jSuXAHA==
-
-"@types/ioredis@*":
-  version "4.17.9"
-  resolved "https://registry.yarnpkg.com/@types/ioredis/-/ioredis-4.17.9.tgz#b11e4768a40ce6ae8d0c8b1266feb98e9dbfd999"
-  integrity sha512-YVLcCDQXaQRMK6Lut2f7KaiU2sV2dEN57AmZTtcZW/TXYv3wKwZTV87oUaA/IAI1Xk4s+d+kXLlCJkGAycfpHw==
-  dependencies:
-    "@types/node" "*"
 
 "@types/is-my-json-valid@0.0.20":
   version "0.0.20"
@@ -6426,7 +6407,7 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-cross-fetch@3.0.6, cross-fetch@^3.0.4, cross-fetch@^3.0.6:
+cross-fetch@3.0.6, cross-fetch@^3.0.4:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.6.tgz#3a4040bc8941e653e0e9cf17f29ebcd177d3365c"
   integrity sha512-KBPUbqgFjzWlVcURG+Svp9TlhA5uliYtiNx/0r8nv0pdypeQCRJ9IaSIc3q/x3q8t3F75cHuwxVql1HFGHCNJQ==
@@ -9005,15 +8986,6 @@ graphql-extensions@^0.12.8:
     "@apollographql/apollo-tools" "^0.4.3"
     apollo-server-env "^3.0.0"
     apollo-server-types "^0.6.3"
-
-graphql-request@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-3.4.0.tgz#3a400cd5511eb3c064b1873afb059196bbea9c2b"
-  integrity sha512-acrTzidSlwAj8wBNO7Q/UQHS8T+z5qRGquCQRv9J1InwR01BBWV9ObnoE+JS5nCCEj8wSGS0yrDXVDoRiKZuOg==
-  dependencies:
-    cross-fetch "^3.0.6"
-    extract-files "^9.0.0"
-    form-data "^3.0.0"
 
 graphql-subscriptions@^1.0.0, graphql-subscriptions@^1.1.0:
   version "1.1.0"

@@ -35,6 +35,15 @@ export class DonasiService {
     });
   }
 
+  async createMany(
+    data: Prisma.DonasiCreateInput[]
+  ): Promise<Prisma.BatchPayload> {
+    return await this.prisma.donasi.createMany({
+      data,
+      skipDuplicates: true,
+    });
+  }
+
   async update(params: {
     where: Prisma.DonasiWhereUniqueInput;
     data: Prisma.DonasiUpdateInput;

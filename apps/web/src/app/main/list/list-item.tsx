@@ -17,7 +17,7 @@ export function ListItem(props: ListItemProps) {
         </h3>
         <p>{d.phone}</p>
       </div>
-      <div>{d.amount}</div>
+      <div>{d.amount.toLocaleString()}</div>
     </li>
   );
 }

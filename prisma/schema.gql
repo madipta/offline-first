@@ -18,6 +18,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type BatchPayload {
+  count: Float!
+}
+
 type Query {
   oneById(id: Float!): Donasi
   pagelist(take: Float!, skip: Float!): [Donasi!]!
@@ -25,6 +29,7 @@ type Query {
 
 type Mutation {
   create(data: DonasiCreateInput!): Donasi!
+  createMany(data: DonasiCreateInputs!): BatchPayload!
 }
 
 input DonasiCreateInput {
@@ -33,4 +38,8 @@ input DonasiCreateInput {
   name: String!
   phone: String
   amount: Float!
+}
+
+input DonasiCreateInputs {
+  batch: [DonasiCreateInput!]!
 }

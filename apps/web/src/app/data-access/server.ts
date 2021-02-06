@@ -23,9 +23,8 @@ export function useServeDonasiList() {
   });
 }
 
-
 const DonasiInsertGql = gql`
-  mutation DonasiCreateInput(
+  mutation DonasiCreateInputs(
     $id: String!
     $createdAt: Float!
     $name: String!
@@ -47,13 +46,21 @@ const DonasiInsertGql = gql`
   }
 `;
 
-export function useDonasiInsertFromServer() {
+const donasiMaper = (val) => {
+  const { id, amount, cretedAt, ...rest } = val;
+  return {
+    ...rest,
+    id: id ?? nanoid(),
+    amount: +amount,
+    createdAt: Date.now(),
+  };
+};
+
+export function useDonasiInsert() {
   const [add, result] = useMutation(DonasiInsertGql);
   return [
     (opt) => {
-      opt.variables.id = nanoid();
-      opt.variables.amount = +opt.variables.amount;
-      opt.variables.createdAt = Date.now();
+      opt.variables = donasiMaper(opt.variables);
       return add(opt);
     },
     result,

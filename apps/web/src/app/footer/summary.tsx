@@ -1,30 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
+import { DonasiSumContext } from '../app.context';
 
 const StyledSummary = styled.div`
   > div {
     display: flex;
+    justify-content: center;
     background-color: #f5f1e3;
     width: 100%;
-    padding: .5rem .75rem;
+    padding: 0.5rem 0.75rem;
 
     h3 {
-      flex: 1;
       color: #960;
-      font-size: 0.9rem;
+      font-style: italic;
       text-align: right;
-      margin-right: 0.75rem;
+      margin-right: 0.5rem;
     }
 
     em {
       color: #373737;
-      font-size: 0.9rem;
+      font-style: normal;
     }
   }
 `;
 
 export function Summary() {
+  const { sum } = useContext(DonasiSumContext);
   return (
     <StyledSummary>
       <Route
@@ -33,7 +35,7 @@ export function Summary() {
         render={() => (
           <div>
             <h3>total:</h3>
-            <em>0</em>
+            <em>{sum.toLocaleString()}</em>
           </div>
         )}
       />

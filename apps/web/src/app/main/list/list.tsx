@@ -73,13 +73,6 @@ const StyledDonasiList = styled.ul`
 
 function List() {
   const [selected, setSelected] = useState('server');
-  // const [list, setList] = useState([]);
-  // const { data: localdata } = useLocalDonasiList();
-  // const { data: serverData } = useServeDonasiList();
-  // useEffect(() => {
-  //   const sData = serverData?.pagelist ?? [];
-  //   setList([...localdata, ...sData]);
-  // }, [serverData, localdata]);
   const Comp = selected === 'server' ? ServerData : LocalData;
   return (
     <StyledList>
