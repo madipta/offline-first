@@ -9,14 +9,14 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="manifest" href="manifest.webmanifest" />
     <style>
-      * {
+      *,
+      *::before,
+      *::after {
         background: transparent;
         color: inherit;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-          Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-          sans-serif;
-        font-size: 0.9rem;
-        font-weight: 400;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
         text-indent: 0;
         box-sizing: border-box;
         border: none;
@@ -32,6 +32,11 @@
       body {
         background-color: #fafafa;
         color: #2a2a2a;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+          sans-serif;
+        font-size: 0.9rem;
+        font-weight: 400;
       }
       * {
         scrollbar-width: thin;

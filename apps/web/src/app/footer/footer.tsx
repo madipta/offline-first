@@ -20,7 +20,7 @@ const StyledFooter = styled.div`
     display: flex;
     justify-content: center;
     list-style-type: none;
-    padding: .7rem 0;
+    padding: .12rem 0 .25rem;
 
     > li > a,
     > li > .Link {

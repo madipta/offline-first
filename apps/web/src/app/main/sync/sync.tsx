@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import styled from 'styled-components';
 import { DeleteDonasi, FindDonasi } from '../../data-access/local';
 import { useDonasiInsert } from '../../data-access/server';

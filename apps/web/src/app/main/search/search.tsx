@@ -3,36 +3,42 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import styled from 'styled-components';
 
 const StyledSearch = styled.div`
-
   form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: 1.5rem;
+    padding: 1.5rem 2.5rem;
+    overflow: hidden;
 
     > div {
       display: flex;
-      width: 90%;
-      max-width: 28rem;
-      margin: .4rem auto;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 24rem;
+      margin: 0.4rem 0;
 
-      input[type="radio"] {
-        margin-left: .5rem;
+      > label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        input[type='radio'] {
+          margin-right: 0.2rem;
+        }
+
+        input[value='local'] {
+          margin-left: 1.1rem;
+        }
       }
 
-      > span {
-        line-height: 1.15rem;
-        margin-left: .3rem;
-        margin-right: .5rem;
-      }
-
-      input[name="search"] {
+      input[name='search'] {
         color: #222;
         flex-grow: 1;
         font-size: 1.02rem;
         line-height: 1.85rem;
-        padding: 0.175rem 0.9rem;
+        padding: 0.175rem 0.5rem;
         border: 1px solid #cfd8d4;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
@@ -41,12 +47,11 @@ const StyledSearch = styled.div`
 
       button {
         cursor: pointer;
-        background-color: #f74a38;
+        background-color: #f7402a;
         color: #fff;
-        font-size: 1.02rem;
         line-height: 1.85rem;
-        padding: 0.175rem 1.2rem;
-        border: 1px solid #f74a38;
+        padding: 0.2rem 1rem;
+        border: 1px solid #f7402a;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
       }
@@ -54,9 +59,8 @@ const StyledSearch = styled.div`
 
     .error {
       color: red;
-      text-align: right;
-      padding-right: 0.2rem;
-      margin-top: 0.4rem;
+      line-height: 1rem;
+      margin-bottom: 1rem;
     }
   }
 `;
@@ -80,19 +84,23 @@ export function Search() {
       >
         {({ isSubmitting }) => (
           <Form>
-          <div>
-            <Field type="text" name="search" value="" />
-            <button type="submit" disabled={isSubmitting}>
-              Search
-            </button>
-          </div>
             <div>
-              <Field type="radio" name="source" value="server" />
-              <span>Saved</span>
-              <Field type="radio" name="source" value="local" />
-              <span>Draft</span>
+              <Field type="text" name="search" />
+              <button type="submit" disabled={isSubmitting}>
+                Search
+              </button>
             </div>
-            <ErrorMessage name="search" component="div" className="error" />
+            <ErrorMessage name="search" component="p" className="error" />
+            <div>
+              <label>
+                <Field type="radio" name="source" value="server" />
+                Saved
+              </label>
+              <label>
+                <Field type="radio" name="source" value="local" />
+                Draft
+              </label>
+            </div>
           </Form>
         )}
       </Formik>

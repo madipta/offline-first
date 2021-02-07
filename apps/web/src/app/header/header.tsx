@@ -7,11 +7,11 @@ const StyledHeader = styled.div`
   align-items: center;
   background-color: #1b9aaa;
   width: 100%;
-  padding: 0.825rem;
+  padding: .725rem .85rem;
 
   h1 {
-    font-size: 1.125rem;
-    font-weight: 700;
+    font-size: 1.175rem;
+    font-weight: 600;
     color: white;
   }
 `;
