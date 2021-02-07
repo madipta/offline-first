@@ -12,7 +12,6 @@ import { DonasiService } from '@offline-first/services';
 import { Donasi } from '../models/donasi';
 import { DonasiCreateInput } from '../models/donasi-create-input';
 import { BatchPayload } from '../models/batch-payload';
-import { Prisma } from '@prisma/client';
 
 @InputType()
 class DonasiCreateInputs {
@@ -51,11 +50,17 @@ export class DonasiResolver {
   }
 
   @Query(() => [Donasi])
-  async pagelist(@Args('skip') skip: number, @Args('take') take: number) {
+  async pagelist(
+    @Args('skip') skip: number,
+    @Args('take') take: number,
+    @Args('sort', { type: () => String, nullable: true }) sort = 'syncedAt',
+    @Args('order', { type: () => String, nullable: true }) order = 'desc'
+  ) {
+    const orderBy = { [sort]: order };
     return this.donasiService.pagelist({
       skip,
       take,
-      orderBy: { syncedAt: 'desc' },
+      orderBy,
     });
   }
 }

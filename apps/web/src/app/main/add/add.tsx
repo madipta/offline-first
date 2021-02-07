@@ -4,7 +4,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { InsertDonasi } from '../../data-access/local';
 
 const StyledAdd = styled.div`
-  margin-top: 1.9rem;
+  margin-top: 2rem;
 
   form {
     display: flex;
@@ -13,7 +13,7 @@ const StyledAdd = styled.div`
     width: 100%;
 
     > div {
-      margin-bottom: 1rem;
+      margin-bottom: .7rem;
 
       label {
         display: flex;
@@ -22,7 +22,6 @@ const StyledAdd = styled.div`
 
         b {
           color: #08423d;
-          font-size: 0.95rem;
           line-height: 1.85rem;
           width: 5rem;
           margin-right: 0.3rem;
@@ -31,7 +30,6 @@ const StyledAdd = styled.div`
         input {
           color: #222;
           flex-grow: 1;
-          font-size: 1.02rem;
           line-height: 1.85rem;
           padding: 3px 6px;
           border: 1px solid #cfd8d4;
@@ -54,12 +52,11 @@ const StyledAdd = styled.div`
       cursor: pointer;
       background-color: #f74a38;
       color: #fff;
-      font-size: 0.95rem;
       font-weight: 600;
       line-height: 1.85rem;
-      padding: 0.375rem 1.2rem;
+      padding: 0.2rem 1.1rem;
       border-radius: 0.15rem;
-      margin-top: 1.5rem;
+      margin-top: 1.2rem;
     }
 
     button[disabled] {

@@ -59,9 +59,9 @@ const donasiMaper = (val) => {
 export function useDonasiInsert() {
   const [add, result] = useMutation(DonasiInsertGql);
   return [
-    (opt) => {
+    async (opt) => {
       opt.variables = donasiMaper(opt.variables);
-      return add(opt);
+      return await add(opt);
     },
     result,
   ];

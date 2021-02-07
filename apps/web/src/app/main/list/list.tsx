@@ -42,8 +42,8 @@ const StyledDonasiList = styled.ul`
     display: flex;
     align-items: center;
     width: 95%;
-    padding: 0.5rem 0.6rem;
-    margin: 0.5rem auto;
+    padding: 0 0.8rem 0.5rem;
+    margin: 0.8rem auto;
     border-style: solid;
     border-width: 0;
     border-color: #eaeaea;
@@ -61,11 +61,13 @@ const StyledDonasiList = styled.ul`
       margin: 0 1rem;
 
       h3 {
-        margin-bottom: 4px;
+        margin-bottom: .03rem;
       }
 
       p {
-        font-size: 0.75rem;
+        color: #888;
+        letter-spacing: 0.05rem;
+        font-size: 0.8rem;
       }
     }
   }

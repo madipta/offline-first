@@ -11,6 +11,9 @@ export function LocalData() {
     if (data.length) {
       setSum(data.map((d) => d.amount).reduce((a, b) => a + b, 0));
     }
+    else {
+      setSum(0);
+    }
   }, [data, setSum]);
   return (
     <>

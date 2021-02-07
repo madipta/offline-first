@@ -13,7 +13,7 @@ export function ListItem(props: ListItemProps) {
       <div className="listNo">{props.index + 1}</div>
       <div className="listName">
         <h3>
-          {d.name} {d.id}
+          {d.name}
         </h3>
         <p>{d.phone}</p>
       </div>

@@ -29,14 +29,6 @@ const StyledApp = styled.div`
 `;
 
 export function App() {
-  // window.addEventListener('load', function () {
-  //   window.addEventListener('online', function (e) {
-  //     console.log('online');
-  //   });
-  //   window.addEventListener('offline', function (e) {
-  //     console.log('offline');
-  //   });
-  // });
   return (
     <DonasiSumProvider>
       <ApolloProvider client={client}>

@@ -14,6 +14,8 @@ export function ServerData() {
       setData(list);
       if (list.length) {
         setSum(list.map((d) => d.amount).reduce((a, b) => a + b, 0));
+      } else {
+        setSum(0);
       }
     }
   }, [serverData, setSum]);
