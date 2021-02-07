@@ -19,7 +19,7 @@ const DonasiListGQL = gql`
 
 export function useServeDonasiList() {
   return useQuery(DonasiListGQL, {
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-and-network',
   });
 }
 
