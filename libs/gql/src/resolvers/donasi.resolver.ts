@@ -12,6 +12,8 @@ import { DonasiService } from '@offline-first/services';
 import { Donasi } from '../models/donasi';
 import { DonasiCreateInput } from '../models/donasi-create-input';
 import { BatchPayload } from '../models/batch-payload';
+import { DonasiListInput } from '../models/donasi-list-input';
+import { DonasiPagelistInput } from '../models/donasi-pagelist-input';
 
 @InputType()
 class DonasiCreateInputs {
@@ -50,16 +52,41 @@ export class DonasiResolver {
   }
 
   @Query(() => [Donasi])
-  async pagelist(
-    @Args('skip') skip: number,
-    @Args('take') take: number,
-    @Args('sort', { type: () => String, nullable: true }) sort = 'syncedAt',
-    @Args('order', { type: () => String, nullable: true }) order = 'desc'
-  ) {
+  async pagelist(@Args('data') data: DonasiPagelistInput) {
+    const { skip, take, filter } = data;
+    let { sort, order } = data;
+    sort = sort ?? 'syncedAt';
+    order = order ?? 'desc';
     const orderBy = { [sort]: order };
+    let where = {};
+    if (filter) {
+      where = {
+        OR: [{ name: { contains: filter } }, { phone: { contains: filter } }],
+      };
+    }
     return this.donasiService.pagelist({
       skip,
       take,
+      where,
+      orderBy,
+    });
+  }
+
+  @Query(() => [Donasi])
+  async list(@Args('data') data: DonasiListInput) {
+    let { sort, order } = data;
+    sort = sort ?? 'syncedAt';
+    order = order ?? 'desc';
+    const orderBy = { [sort]: order };
+    const filter = data.filter;
+    let where = {};
+    if (filter) {
+      where = {
+        OR: [{ name: { contains: filter } }, { phone: { contains: filter } }],
+      };
+    }
+    return this.donasiService.pagelist({
+      where,
       orderBy,
     });
   }

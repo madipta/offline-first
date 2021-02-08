@@ -1,6 +1,7 @@
 import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import styled from 'styled-components';
+import { useDonasiSearch } from '../../data-access/server';
 
 const StyledSearch = styled.div`
   form {
@@ -65,46 +66,96 @@ const StyledSearch = styled.div`
   }
 `;
 
+const StyledResult = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 1rem;
+  margin-top: 1rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    width: 95%;
+    padding: 0 0.8rem 0.5rem;
+    border-style: solid;
+    border-width: 0;
+    border-color: #eaeaea;
+    border-bottom-width: 1px;
+    margin-bottom: 0.8rem;
+
+    div:nth-child(1) {
+      min-width: 1.5rem;
+      padding-left: 0.3rem;
+    }
+
+    div:nth-child(2) {
+      flex: 1;
+      padding-left: 1rem;
+      padding-right: 1rem;
+
+      p {
+        font-weight: 600;
+      }
+    }
+  }
+`;
+
 export function Search() {
+  const [getList, { loading, data }] = useDonasiSearch();
   return (
-    <StyledSearch>
-      <Formik
-        initialValues={{ search: '', source: 'server' }}
-        validate={(values) => {
-          const errors = { search: null };
-          if (!values.search) {
-            errors.search = 'Required';
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
+    <>
+      <StyledSearch>
+        <Formik
+          initialValues={{ search: '', source: 'server' }}
+          validate={(values) => {
+            const errors: { search?: string } = {};
+            if (!values.search) {
+              errors.search = 'Required';
+            }
+            return errors;
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+            getList({ variables: { filter: values.search } });
+            setSubmitting(false);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <div>
+                <Field type="text" name="search" />
+                <button type="submit" disabled={isSubmitting}>
+                  Search
+                </button>
+              </div>
+              <ErrorMessage name="search" component="p" className="error" />
+              <div>
+                <label>
+                  <Field type="radio" name="source" value="server" />
+                  Saved
+                </label>
+                <label>
+                  <Field type="radio" name="source" value="local" />
+                  Draft
+                </label>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </StyledSearch>
+      <StyledResult>
+        {data?.list.map((d, i) => (
+          <li key={d.id}>
+            <div>{i + 1}</div>
             <div>
-              <Field type="text" name="search" />
-              <button type="submit" disabled={isSubmitting}>
-                Search
-              </button>
+              <p>{d.name}</p>
+              <em>{d.phone}</em>
             </div>
-            <ErrorMessage name="search" component="p" className="error" />
-            <div>
-              <label>
-                <Field type="radio" name="source" value="server" />
-                Saved
-              </label>
-              <label>
-                <Field type="radio" name="source" value="local" />
-                Draft
-              </label>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </StyledSearch>
+            <div>{d.amount.toLocaleString()}</div>
+          </li>
+        ))}
+      </StyledResult>
+    </>
   );
 }
 

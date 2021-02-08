@@ -24,7 +24,22 @@ type BatchPayload {
 
 type Query {
   oneById(id: Float!): Donasi
-  pagelist(order: String, sort: String, take: Float!, skip: Float!): [Donasi!]!
+  pagelist(data: DonasiPagelistInput!): [Donasi!]!
+  list(data: DonasiListInput!): [Donasi!]!
+}
+
+input DonasiPagelistInput {
+  take: Float!
+  skip: Float!
+  filter: String
+  sort: String
+  order: String
+}
+
+input DonasiListInput {
+  filter: String
+  sort: String
+  order: String
 }
 
 type Mutation {

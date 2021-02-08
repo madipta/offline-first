@@ -53,6 +53,8 @@ export function Sync() {
     if (data && data.length) {
       data.forEach(async (val, i) => {
         const { id, name, phone, amount, createdAt } = val;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         await add({ variables: { id, name, phone, amount, createdAt } });
         await DeleteDonasi(id);
         setCount(1);

@@ -1,11 +1,11 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { customAlphabet } from 'nanoid';
 
 const nanoid = customAlphabet('1234567890abcdefhijklmnopqrstuvwxyz', 10);
 
 const DonasiListGQL = gql`
-  query {
-    pagelist(take: 20, skip: 0) {
+  query DonasiListInput($filter: String, $sort: String, $order: String) {
+    list(data: { filter: $filter, sort: $sort, order: $order }) {
       id
       createdAt
       name
@@ -17,8 +17,14 @@ const DonasiListGQL = gql`
   }
 `;
 
-export function useServeDonasiList() {
+export function useDonasiList() {
   return useQuery(DonasiListGQL, {
+    fetchPolicy: 'cache-and-network',
+  });
+}
+
+export function useDonasiSearch() {
+  return useLazyQuery(DonasiListGQL, {
     fetchPolicy: 'cache-and-network',
   });
 }

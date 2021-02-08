@@ -1,27 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { DonasiSumContext } from '../../app.context';
-import { useServeDonasiList } from '../../data-access/server';
+import { useDonasiList } from '../../data-access/server';
 import ListItem from './list-item';
 
 export function ServerData() {
-  const [data, setData] = useState([]);
-  const { data: serverData } = useServeDonasiList();
+  const { data } = useDonasiList();
   const sumContext = useContext(DonasiSumContext);
   const { sum, setSum } = sumContext;
   useEffect(() => {
-    if (serverData) {
-      const list = serverData.pagelist;
-      setData(list);
+    if (data) {
+      const list = data.list;
       if (list.length) {
         setSum(list.map((d) => d.amount).reduce((a, b) => a + b, 0));
       } else {
         setSum(0);
       }
     }
-  }, [serverData, setSum]);
+  }, [data, setSum]);
+  if (!data) return (<> </>);
   return (
     <>
-      {data.map((d, i) => (
+      {data.list.map((d, i) => (
         <ListItem key={d.id} donasi={d} index={i}></ListItem>
       ))}
     </>
