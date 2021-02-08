@@ -29,6 +29,8 @@ run nest api server
 
 
 <p>
-  <img src="https://github.com/madipta/nx-pwa/blob/master/screenshot/screenshot-1-min.png?raw=true" width="250">
-  <img src="https://github.com/madipta/nx-pwa/blob/master/screenshot/screenshot-2-min.png?raw=true" width="250">
+  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-01-min.png" width="150">
+  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-02-min.png" width="150">
+  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-03-min.png" width="150">
+  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-04-min.png" width="150">
 </p>
