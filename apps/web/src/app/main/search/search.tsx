@@ -102,7 +102,7 @@ const StyledResult = styled.ul`
 `;
 
 export function Search() {
-  const [getList, { loading, data }] = useDonasiSearch();
+  const [getList, { data }] = useDonasiSearch();
   return (
     <>
       <StyledSearch>

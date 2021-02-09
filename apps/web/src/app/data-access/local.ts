@@ -12,7 +12,7 @@ export const InsertDonasi = async (values) => {
   values.id = values.id ?? nanoid();
   values.amount = +values.amount;
   values.createdAt = Date.now();
-  values.sync = 0;
+  values.sync = false;
   return (await GetDonasi()).insert(values);
 };
 

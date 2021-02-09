@@ -8,6 +8,7 @@
     <meta name="theme-color" content="#1b9aaa" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="preconnect" href="http://localhost:3333" />
     <style>
       *,
       *::before,
@@ -56,5 +57,39 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('serviceworker.js', { scope: '/' })
+          .then((registration) => {
+            const scope = registration.scope;
+            console.log(`Service Worker registered properly at ${scope}`);
+          })
+          .catch((error) => {
+            console.log('Service Worker NOT registered');
+          });
+      } else {
+        console.log('Service Worker NOT available');
+      }
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .getRegistration()
+          .then((registration) => {
+            registration.addEventListener('updatefound', (event) => {
+              const swInstalling = registration.installing;
+              swInstalling.addEventListener('statechange', () => {
+                if (swInstalling.state == 'installed') {
+                  console.log('A new Service Worker is installed and waiting');
+                } else {
+                  console.log(
+                    'A new Service Worker is now controlling the page'
+                  );
+                }
+              });
+            });
+          })
+          .catch((error) => {});
+      }
+    </script>
   </body>
 </html>

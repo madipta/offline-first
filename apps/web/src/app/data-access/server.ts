@@ -1,4 +1,4 @@
-import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import { customAlphabet } from 'nanoid';
 
 const nanoid = customAlphabet('1234567890abcdefhijklmnopqrstuvwxyz', 10);
@@ -18,7 +18,7 @@ const DonasiListGQL = gql`
 `;
 
 export function useDonasiList() {
-  return useQuery(DonasiListGQL, {
+  return useLazyQuery(DonasiListGQL, {
     fetchPolicy: 'cache-and-network',
   });
 }

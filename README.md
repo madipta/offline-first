@@ -10,8 +10,9 @@ install nx cli globaly
 install node_modules packages
 `npm install or yarn`
 
-install postgreSql https://www.postgresql.org/download/ then set DATABASE_URL on .env file
-make sure postgresql is running!
+install postgreSql https://www.postgresql.org/download/ or using docker https://hub.docker.com/_/postgres then `set DATABASE_URL on .env file`
+
+make sure database service is running beofre generate database
 
 generate database
 `npm run migrate:dev`  
@@ -21,7 +22,7 @@ generate prismagraphql
 
 ## How to Run
 
-run angular web server
+run React web server
 `nx serve`
 
 run nest api server

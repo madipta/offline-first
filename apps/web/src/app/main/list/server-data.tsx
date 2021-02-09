@@ -4,9 +4,12 @@ import { useDonasiList } from '../../data-access/server';
 import ListItem from './list-item';
 
 export function ServerData() {
-  const { data } = useDonasiList();
+  const [getList, { data }] = useDonasiList();
   const sumContext = useContext(DonasiSumContext);
   const { sum, setSum } = sumContext;
+  useEffect(() => {
+    getList();
+  }, [getList]);
   useEffect(() => {
     if (data) {
       const list = data.list;
@@ -17,7 +20,7 @@ export function ServerData() {
       }
     }
   }, [data, setSum]);
-  if (!data) return (<> </>);
+  if (!data) return <> </>;
   return (
     <>
       {data.list.map((d, i) => (

@@ -23,8 +23,8 @@ export const DonasiSchema = {
       type: 'number',
     },
     sync: {
-      type: 'number',
-      default: 0
+      type: 'boolean',
+      default: false
     },
   },
   required: ['name', 'amount'],
