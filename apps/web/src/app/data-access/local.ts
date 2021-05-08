@@ -19,7 +19,7 @@ export const InsertDonasi = async (values) => {
 export const UpdateDonasi = async (id, values) => {
   const donasi = await GetDonasi();
   donasi
-    .findOne({ selector: { id: { $eq: id }, sync: { $eq: 0 } } })
+    .findOne({ selector: { id: { $eq: id }, sync: { $eq: false } } })
     .exec()
     .then((doc) => {
       doc && doc.update({ $set: { ...values } });
@@ -29,9 +29,10 @@ export const UpdateDonasi = async (id, values) => {
 export const DeleteDonasi = async (id) => {
   const donasi = await GetDonasi();
   donasi
-    .findOne({ selector: { id: { $eq: id }, sync: { $eq: 0 } } })
+    .findOne({ selector: { id: { $eq: id }, sync: { $eq: false } } })
     .exec()
     .then((doc) => {
+      console.log(doc)
       doc && doc.remove();
     });
 };
