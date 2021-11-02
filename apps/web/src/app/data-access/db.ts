@@ -1,21 +1,14 @@
-import { createRxDatabase, addRxPlugin } from 'rxdb';
+import { addPouchPlugin, addRxPlugin, createRxDatabase, getRxStoragePouch } from 'rxdb';
+import { RxDBNoValidatePlugin } from 'rxdb/plugins/no-validate';
 import { DonasiSchema } from './donasi.schema';
-// import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election';
-// import { RxDBReplicationPlugin } from 'rxdb/plugins/replication';
-// import { RxDBNoValidatePlugin } from 'rxdb/plugins/no-validate';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-addRxPlugin(require('pouchdb-adapter-idb'));
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// addRxPlugin(require('pouchdb-adapter-http')); // enable syncing over http
-// addRxPlugin(RxDBLeaderElectionPlugin);
-// addRxPlugin(RxDBReplicationPlugin);
-// addRxPlugin(RxDBNoValidatePlugin);
+addPouchPlugin(require('pouchdb-adapter-idb'));
+addRxPlugin(RxDBNoValidatePlugin);
 
 const createDatabase = async () => {
   const db = await createRxDatabase({
     name: 'donasidb',
-    adapter: 'idb',
+    storage: getRxStoragePouch('idb')
   });
   await db.addCollections({
     donasi: {

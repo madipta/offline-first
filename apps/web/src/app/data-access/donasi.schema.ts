@@ -2,6 +2,7 @@ export const DonasiSchema = {
   title: 'donasi schema',
   version: 0,
   type: 'object',
+  primaryKey: 'id',
   properties: {
     id: {
       type: 'string',
