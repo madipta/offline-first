@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import FooterNav from './footer-nav';
 import Summary from './summary';

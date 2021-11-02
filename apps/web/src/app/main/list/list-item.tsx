@@ -1,4 +1,3 @@
-import React from 'react';
 import { IDonasi } from '../../data-access/donasi.model';
 
 export interface ListItemProps {

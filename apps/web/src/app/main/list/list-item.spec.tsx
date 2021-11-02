@@ -1,6 +1,4 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-
 import ListItem from './list-item';
 
 describe('ListItem', () => {

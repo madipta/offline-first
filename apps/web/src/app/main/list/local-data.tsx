@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { DonasiSumContext } from '../../app.context';
 import { useLocalDonasiList } from '../../data-access/local';
 import ListItem from './list-item';

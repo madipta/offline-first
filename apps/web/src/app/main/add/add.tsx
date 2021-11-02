@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { InsertDonasi } from '../../data-access/local';

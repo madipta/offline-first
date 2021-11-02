@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route } from 'react-router-dom';
 import LinkAdd from './link-add';
 import LinkHome from './link-home';
