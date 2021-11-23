@@ -40,3 +40,4 @@ Thumbs.db
 
 /prisma/migrations
 /prisma/schema.gql
+migrations.json
