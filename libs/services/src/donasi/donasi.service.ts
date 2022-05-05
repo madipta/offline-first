@@ -17,7 +17,7 @@ export class DonasiService {
     take?: number;
     cursor?: Prisma.DonasiWhereUniqueInput;
     where?: Prisma.DonasiWhereInput;
-    orderBy?: Prisma.DonasiOrderByInput;
+    orderBy?: Prisma.DonasiOrderByWithRelationInput;
   }): Promise<Donasi[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.donasi.findMany({
