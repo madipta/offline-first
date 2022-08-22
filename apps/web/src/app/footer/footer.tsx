@@ -1,5 +1,9 @@
+import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import FooterNav from './footer-nav';
+import LinkAdd from './link-add';
+import LinkHome from './link-home';
+import LinkSearch from './link-search';
+import LinkSync from './link-sync';
 import Summary from './summary';
 
 /* eslint-disable-next-line */
@@ -19,7 +23,7 @@ const StyledFooter = styled.div`
     display: flex;
     justify-content: center;
     list-style-type: none;
-    padding: .12rem 0 .25rem;
+    padding: 0.12rem 0 0.25rem;
 
     > li > a,
     > li > .Link {
@@ -41,12 +45,52 @@ export function Footer() {
   return (
     <StyledFooter>
       <Summary></Summary>
-      <ul>
-        <FooterNav path="/"></FooterNav>
-        <FooterNav path="/add"></FooterNav>
-        <FooterNav path="/search"></FooterNav>
-        <FooterNav path="/sync"></FooterNav>
-      </ul>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ul>
+              <LinkHome show={false}></LinkHome>
+              <LinkAdd show={true}></LinkAdd>
+              <LinkSearch show={true}></LinkSearch>
+              <LinkSync show={true}></LinkSync>
+            </ul>
+          }
+        ></Route>
+        <Route
+          path="/add"
+          element={
+            <ul>
+              <LinkHome show={true}></LinkHome>
+              <LinkAdd show={false}></LinkAdd>
+              <LinkSearch show={true}></LinkSearch>
+              <LinkSync show={true}></LinkSync>
+            </ul>
+          }
+        ></Route>
+        <Route
+          path="/search"
+          element={
+            <ul>
+              <LinkHome show={true}></LinkHome>
+              <LinkAdd show={true}></LinkAdd>
+              <LinkSearch show={false}></LinkSearch>
+              <LinkSync show={true}></LinkSync>
+            </ul>
+          }
+        ></Route>
+        <Route
+          path="/sync"
+          element={
+            <ul>
+              <LinkHome show={true}></LinkHome>
+              <LinkAdd show={true}></LinkAdd>
+              <LinkSearch show={true}></LinkSearch>
+              <LinkSync show={false}></LinkSync>
+            </ul>
+          }
+        ></Route>
+      </Routes>
     </StyledFooter>
   );
 }

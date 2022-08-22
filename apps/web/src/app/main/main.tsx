@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import Add from './add/add';
 import List from './list/list';
@@ -14,10 +14,12 @@ const StyledMain = styled.div`
 function Main() {
   return (
     <StyledMain>
-      <Route path="/" exact render={() => <List />} />
-      <Route path="/add" exact render={() => <Add />} />
-      <Route path="/search" exact render={() => <Search />} />
-      <Route path="/sync" exact render={() => <Sync />} />
+      <Routes>
+        <Route path="/" element={<List />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/sync" element={<Sync />} />
+      </Routes>
     </StyledMain>
   );
 }

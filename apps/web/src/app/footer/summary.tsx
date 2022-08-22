@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { DonasiSumContext } from '../app.context';
 
@@ -29,16 +29,17 @@ export function Summary() {
   const { sum } = useContext(DonasiSumContext);
   return (
     <StyledSummary>
-      <Route
-        path="/"
-        exact
-        render={() => (
-          <div>
-            <h3>total:</h3>
-            <em>{sum.toLocaleString()}</em>
-          </div>
-        )}
-      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div>
+              <h3>total:</h3>
+              <em>{sum.toLocaleString()}</em>
+            </div>
+          }
+        />
+      </Routes>
     </StyledSummary>
   );
 }

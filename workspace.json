@@ -2,13 +2,14 @@
   "version": 2,
   "projects": {
     "api": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/api",
       "sourceRoot": "apps/api/src",
       "projectType": "application",
       "prefix": "api",
       "targets": {
         "build": {
-          "executor": "@nrwl/node:build",
+          "executor": "@nrwl/node:webpack",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/api",
@@ -31,7 +32,7 @@
           }
         },
         "serve": {
-          "executor": "@nrwl/node:execute",
+          "executor": "@nrwl/node:node",
           "options": {
             "buildTarget": "api:build"
           }
@@ -46,7 +47,7 @@
           "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/api"],
           "options": {
-            "jestConfig": "apps/api/jest.config.js",
+            "jestConfig": "apps/api/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -54,6 +55,7 @@
       "tags": []
     },
     "gql": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/gql",
       "sourceRoot": "libs/gql/src",
       "projectType": "library",
@@ -68,7 +70,7 @@
           "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/gql"],
           "options": {
-            "jestConfig": "libs/gql/jest.config.js",
+            "jestConfig": "libs/gql/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -76,6 +78,7 @@
       "tags": []
     },
     "interfaces": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/interfaces",
       "sourceRoot": "libs/interfaces/src",
       "projectType": "library",
@@ -90,7 +93,7 @@
           "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/interfaces"],
           "options": {
-            "jestConfig": "libs/interfaces/jest.config.js",
+            "jestConfig": "libs/interfaces/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -98,6 +101,7 @@
       "tags": []
     },
     "services": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/services",
       "sourceRoot": "libs/services/src",
       "projectType": "library",
@@ -112,7 +116,7 @@
           "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/services"],
           "options": {
-            "jestConfig": "libs/services/jest.config.js",
+            "jestConfig": "libs/services/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -120,12 +124,13 @@
       "tags": []
     },
     "web": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/web",
       "sourceRoot": "apps/web/src",
       "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nrwl/web:build",
+          "executor": "@nrwl/web:webpack",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/web",
@@ -176,8 +181,12 @@
           "configurations": {
             "production": {
               "buildTarget": "web:build:production"
+            },
+            "development": {
+              "buildTarget": "web:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
@@ -189,7 +198,7 @@
           "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/web"],
           "options": {
-            "jestConfig": "apps/web/jest.config.js",
+            "jestConfig": "apps/web/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -197,6 +206,7 @@
       "tags": []
     },
     "web-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/web-e2e",
       "sourceRoot": "apps/web-e2e/src",
       "projectType": "application",
@@ -224,5 +234,6 @@
       "tags": [],
       "implicitDependencies": ["web"]
     }
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
