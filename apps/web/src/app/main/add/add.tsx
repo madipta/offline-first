@@ -87,7 +87,7 @@ function Add() {
         }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
-            InsertDonasi(values);
+            await InsertDonasi(values);
           } catch (error) {
             console.log(error);
           } finally {

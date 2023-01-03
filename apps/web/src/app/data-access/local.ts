@@ -1,6 +1,6 @@
-import { customAlphabet } from "nanoid";
-import { useState, useEffect } from "react";
-import { GetDonasi } from "./db";
+import { customAlphabet } from 'nanoid';
+import { useState, useEffect } from 'react';
+import { GetDonasi } from './db';
 
 const nanoid = customAlphabet('1234567890abcdefhijklmnopqrstuvwxyz', 10);
 
@@ -12,14 +12,14 @@ export const InsertDonasi = async (values) => {
   values.id = values.id ?? nanoid();
   values.amount = +values.amount;
   values.createdAt = Date.now();
-  values.sync = false;
+  values.sync = 0;
   return (await GetDonasi()).insert(values);
 };
 
 export const UpdateDonasi = async (id, values) => {
   const donasi = await GetDonasi();
   donasi
-    .findOne({ selector: { id: { $eq: id }, sync: { $eq: false } } })
+    .findOne({ selector: { $and: [{ id: { $eq: id }, sync: { $eq: 0 } }] } })
     .exec()
     .then((doc) => {
       doc && doc.update({ $set: { ...values } });
@@ -28,13 +28,9 @@ export const UpdateDonasi = async (id, values) => {
 
 export const DeleteDonasi = async (id) => {
   const donasi = await GetDonasi();
-  donasi
-    .findOne({ selector: { id: { $eq: id }, sync: { $eq: false } } })
-    .exec()
-    .then((doc) => {
-      console.log(doc)
-      doc && doc.remove();
-    });
+  return donasi
+    .find({ selector: { $and: [{ id: { $eq: id }, sync: { $eq: 0 } }] } })
+    .remove();
 };
 
 export function useLocalDonasiList() {

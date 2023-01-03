@@ -1,14 +1,14 @@
-import { addPouchPlugin, addRxPlugin, createRxDatabase, getRxStoragePouch } from 'rxdb';
-import { RxDBNoValidatePlugin } from 'rxdb/plugins/no-validate';
+import { addRxPlugin, createRxDatabase } from 'rxdb';
+import { getRxStorageDexie } from 'rxdb/plugins/dexie';
+import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 import { DonasiSchema } from './donasi.schema';
 
-addPouchPlugin(require('pouchdb-adapter-idb'));
-addRxPlugin(RxDBNoValidatePlugin);
+addRxPlugin(RxDBDevModePlugin);
 
 const createDatabase = async () => {
   const db = await createRxDatabase({
     name: 'donasidb',
-    storage: getRxStoragePouch('idb')
+    storage: getRxStorageDexie(),
   });
   await db.addCollections({
     donasi: {

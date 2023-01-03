@@ -34,16 +34,19 @@ const StyledSync = styled.div`
     flex-direction: column;
     margin-top: 1.2rem;
     li {
-      margin-bottom: .3rem;
+      margin-bottom: 0.3rem;
     }
   }
 `;
 
 export function Sync() {
-  const [count, setCount] = useReducer((c, cp) => cp ? c + 1 : 0, 0);
-  const [success, setSuccess] = useReducer((old, val) => val ? [...old, val] : [], []);
+  const [count, setCount] = useReducer((c, cp) => (cp ? c + 1 : 0), 0);
+  const [success, setSuccess] = useReducer(
+    (old, val) => (val ? [...old, val] : []),
+    []
+  );
   const [loading, setLoading] = useState(false);
-  const [add, result] = useDonasiInsert();
+  const [add] = useDonasiInsert();
   const onSubmit = async () => {
     setLoading(true);
     const data = await FindDonasi({

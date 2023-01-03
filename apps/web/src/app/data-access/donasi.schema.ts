@@ -6,13 +6,17 @@ export const DonasiSchema = {
   properties: {
     id: {
       type: 'string',
-      primary: true,
+      maxLength: 10
     },
     createdAt: {
       type: 'number',
+      minimum: 0,
+      maximum: 10000000000000,
+      multipleOf: 1
     },
     name: {
       type: 'string',
+      maxLength: 100
     },
     phone: {
       type: 'string',
@@ -24,8 +28,8 @@ export const DonasiSchema = {
       type: 'number',
     },
     sync: {
-      type: 'boolean',
-      default: false
+      type: 'number',
+      default: 0
     },
   },
   required: ['name', 'amount'],
