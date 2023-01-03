@@ -1,15 +1,15 @@
 version: '3'
 services:
   adminer:
-    image: adminer
+    image: adminer:4-standalone
     restart: always
     ports:
       - 8080:8080
   pg:
-    image: "postgres:alpine"
+    image: "postgres:13-alpine"
     env_file:
       - .env
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
     volumes:
       - ./tmp/:/var/lib/postgresql/data/
