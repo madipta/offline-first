@@ -37,7 +37,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.7",
-    "@nestjs/apollo": "10.0.17",
+    "@nestjs/apollo": "10.1.7",
     "@nestjs/common": "9.2.1",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "9.2.1",
