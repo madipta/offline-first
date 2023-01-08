@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
-const PRECACHE = 'precache-v1';
-const RUNTIME = 'runtime';
+const STATIC = 'precache-v1';
+const DYNAMIC = 'runtime';
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
@@ -10,49 +10,124 @@ const PRECACHE_URLS = [
 ];
 
 // The install handler takes care of precaching the resources we always need.
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(PRECACHE)
-      .then(cache => cache.addAll(PRECACHE_URLS))
-      .then(self.skipWaiting())
+    (async function () {
+      const cache = await caches.open(STATIC);
+      await cache.addAll(PRECACHE_URLS);
+    })()
   );
 });
 
 // The activate handler takes care of cleaning up old caches.
-self.addEventListener('activate', event => {
-  const currentCaches = [PRECACHE, RUNTIME];
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
-    }).then(cachesToDelete => {
-      return Promise.all(cachesToDelete.map(cacheToDelete => {
-        return caches.delete(cacheToDelete);
-      }));
-    }).then(() => self.clients.claim())
+    (async function () {
+      const cacheNames = await caches.keys();
+      const currentCaches = [STATIC, DYNAMIC];
+      await Promise.all(
+        cacheNames
+          .filter((cacheName) => {
+            return !currentCaches.includes(cacheName);
+          })
+          .map((cacheName) => caches.delete(cacheName))
+      );
+    })()
   );
 });
 
 // The fetch handler serves responses for same-origin resources from a cache.
 // If no response is found, it populates the runtime cache with the response
 // from the network before returning it to the page.
-self.addEventListener('fetch', event => {
-  // Skip cross-origin requests, like those for Google Analytics.
-  if (event.request.url.startsWith(self.location.origin)) {
+self.addEventListener('fetch', (event) => {
+  if (event.request.method === 'POST') {
+    if (event.request.url.includes('/graphql')) {
+      graphqlHandler(event);
+    }
+  } else {
     event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        if (cachedResponse) {
+      (async function () {
+        const cache = await caches.open(DYNAMIC);
+        const cachedResponse = await cache.match(event.request);
+        try {
+          const networkResponse = await fetch(event.request);
+          event.waitUntil(
+            (async function () {
+              await cache.put(event.request, networkResponse.clone());
+            })()
+          );
+          return networkResponse;
+        } catch (err) {
           return cachedResponse;
         }
-
-        return caches.open(RUNTIME).then(cache => {
-          return fetch(event.request).then(response => {
-            // Put a copy of the response in the runtime cache.
-            return cache.put(event.request, response.clone()).then(() => {
-              return response;
-            });
-          });
-        });
-      })
+      })()
     );
   }
 });
+
+function hash(x) {
+  let h, i, l;
+  for (h = 5381 | 0, i = 0, l = x.length | 0; i < l; i++) {
+    h = (h << 5) + h + x.charCodeAt(i);
+  }
+
+  return h >>> 0;
+}
+
+async function graphqlHandler(e) {
+  const exclude = [/mutation/, /query Identity/];
+  const generateQueryId = e.request
+    .clone()
+    .json()
+    .then(({ query, variables }) => {
+      if (exclude.some((r) => r.test(query))) {
+        return null;
+      }
+      // Mocks a request since `caches` only works with requests.
+      return `https://query_${hash(JSON.stringify({ query, variables }))}`;
+    });
+
+  const networkResponse = fromNetwork(e.request);
+
+  e.respondWith(
+    (async () => {
+      // get the request body.
+      const queryId = await generateQueryId;
+      const cachedResult = queryId && (await fromCache(queryId));
+      if (cachedResult) {
+        return cachedResult;
+      }
+      return networkResponse.then((res) => res.clone());
+    })()
+  );
+
+  e.waitUntil(
+    (async () => {
+      try {
+        const res = await networkResponse.then((res) => res.clone());
+        const queryId = await generateQueryId;
+        if (queryId) {
+          await saveToCache(queryId, res);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })()
+  );
+}
+
+async function fromCache(request) {
+  const cache = await caches.open(DYNAMIC);
+  const matching = await cache.match(request);
+
+  return matching;
+}
+
+function fromNetwork(request) {
+  return fetch(request);
+}
+
+async function saveToCache(request, response) {
+  const cache = await caches.open(DYNAMIC);
+  await cache.put(request, response);
+}
