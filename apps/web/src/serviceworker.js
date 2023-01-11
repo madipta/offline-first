@@ -40,11 +40,12 @@ self.addEventListener('activate', (event) => {
 // If no response is found, it populates the runtime cache with the response
 // from the network before returning it to the page.
 self.addEventListener('fetch', (event) => {
-  if (event.request.method === 'POST') {
-    if (event.request.url.includes('/graphql')) {
-      graphqlHandler(event);
-    }
-  } else {
+  const req = event.request;
+  if (req.method === 'POST' && req.url.includes('/graphql')) {
+    graphqlHandler(event);
+    return;
+  }
+  if (req.method === 'GET') {
     event.respondWith(
       (async function () {
         const cache = await caches.open(DYNAMIC);
@@ -62,6 +63,7 @@ self.addEventListener('fetch', (event) => {
         }
       })()
     );
+    return;
   }
 });
 
@@ -76,23 +78,25 @@ function hash(x) {
 
 async function graphqlHandler(e) {
   const exclude = [/mutation/, /query Identity/];
-  const generateQueryId = e.request
+  const queryId = await e.request
     .clone()
     .json()
     .then(({ query, variables }) => {
       if (exclude.some((r) => r.test(query))) {
-        return null;
+        return;
       }
       // Mocks a request since `caches` only works with requests.
       return `https://query_${hash(JSON.stringify({ query, variables }))}`;
     });
 
+  if (!queryId) {
+    return;
+  }
+
   const networkResponse = fromNetwork(e.request);
 
   e.respondWith(
     (async () => {
-      // get the request body.
-      const queryId = await generateQueryId;
       const cachedResult = queryId && (await fromCache(queryId));
       if (cachedResult) {
         return cachedResult;
@@ -105,7 +109,6 @@ async function graphqlHandler(e) {
     (async () => {
       try {
         const res = await networkResponse.then((res) => res.clone());
-        const queryId = await generateQueryId;
         if (queryId) {
           await saveToCache(queryId, res);
         }
