@@ -1,160 +1,105 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import styled from 'styled-components';
+import {
+  Box,
+  Button,
+  Group,
+  LoadingOverlay,
+  Radio,
+  Table,
+  TextInput,
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useState } from 'react';
 import { useDonasiSearch } from '../../data-access/server';
 
-const StyledSearch = styled.div`
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 1.5rem 2.5rem;
-    overflow: hidden;
-
-    > div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      max-width: 24rem;
-      margin: 0.4rem 0;
-
-      > label {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        input[type='radio'] {
-          margin-right: 0.2rem;
-        }
-
-        input[value='local'] {
-          margin-left: 1.1rem;
-        }
-      }
-
-      input[name='search'] {
-        color: #222;
-        flex-grow: 1;
-        font-size: 1.02rem;
-        line-height: 1.85rem;
-        padding: 0.175rem 0.5rem;
-        border: 1px solid #cfd8d4;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        border-right: none;
-      }
-
-      button {
-        cursor: pointer;
-        background-color: #f7402a;
-        color: #fff;
-        line-height: 1.85rem;
-        padding: 0.2rem 1rem;
-        border: 1px solid #f7402a;
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-      }
-    }
-
-    .error {
-      color: red;
-      line-height: 1rem;
-      margin-bottom: 1rem;
-    }
-  }
-`;
-
-const StyledResult = styled.ul`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0 1rem;
-  margin-top: 1rem;
-
-  li {
-    display: flex;
-    align-items: center;
-    width: 95%;
-    padding: 0 0.8rem 0.5rem;
-    border-style: solid;
-    border-width: 0;
-    border-color: #eaeaea;
-    border-bottom-width: 1px;
-    margin-bottom: 0.8rem;
-
-    div:nth-child(1) {
-      min-width: 1.5rem;
-      padding-left: 0.3rem;
-    }
-
-    div:nth-child(2) {
-      flex: 1;
-      padding-left: 1rem;
-      padding-right: 1rem;
-
-      p {
-        font-weight: 600;
-      }
-    }
-  }
-`;
-
 export function Search() {
+  const [isLoading, setLoading] = useState(false);
   const [getList, { data }] = useDonasiSearch();
+  const form = useForm({
+    initialValues: {
+      search: '',
+      source: 'server',
+    },
+    validate: {
+      search: (value) => {
+        return value.trim().length < 3 ? 'Required, min: 3 chars' : null;
+      },
+    },
+  });
   return (
-    <>
-      <StyledSearch>
-        <Formik
-          initialValues={{ search: '', source: 'server' }}
-          validate={(values) => {
-            const errors: { search?: string } = {};
-            if (!values.search) {
-              errors.search = 'Required';
+    <Box
+      sx={(theme) => ({
+        maxWidth: '800px',
+        margin: '12px auto 0',
+      })}
+    >
+      <Box
+        sx={(theme) => ({
+          maxWidth: '300px',
+          margin: '0 auto',
+        })}
+      >
+        <form
+          onSubmit={form.onSubmit(
+            async (values, _event) => {
+              try {
+                setLoading(true);
+                getList({ variables: { filter: values.search } });
+              } catch (error) {
+                console.log(error);
+              } finally {
+                setTimeout(() => {
+                  setLoading(false);
+                }, 300);
+              }
+            },
+            (validationErrors, _values, _event) => {
+              console.log(validationErrors);
             }
-            return errors;
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            getList({ variables: { filter: values.search } });
-            setSubmitting(false);
-          }}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <div>
-                <Field type="text" name="search" />
-                <button type="submit" disabled={isSubmitting}>
-                  Search
-                </button>
-              </div>
-              <ErrorMessage name="search" component="p" className="error" />
-              <div>
-                <label>
-                  <Field type="radio" name="source" value="server" />
-                  Saved
-                </label>
-                <label>
-                  <Field type="radio" name="source" value="local" />
-                  Draft
-                </label>
-              </div>
-            </Form>
           )}
-        </Formik>
-      </StyledSearch>
-      <StyledResult>
-        {data?.list.map((d, i) => (
-          <li key={d.id}>
-            <div>{i + 1}</div>
-            <div>
-              <p>{d.name}</p>
-              <em>{d.phone}</em>
-            </div>
-            <div>{d.amount.toLocaleString()}</div>
-          </li>
-        ))}
-      </StyledResult>
-    </>
+        >
+          <LoadingOverlay visible={isLoading} overlayBlur={2} />
+          <TextInput
+            withAsterisk
+            label="Search"
+            {...form.getInputProps('search')}
+          />
+          <Group position="center">
+            <Radio.Group name="source" {...form.getInputProps('source')}>
+              <Radio value="server" label="Server" />
+              <Radio value="local" label="Draft" />
+            </Radio.Group>
+          </Group>
+          <Group position="center" mt="md">
+            <Button type="submit" color="red.7">
+              Search
+            </Button>
+          </Group>
+        </form>
+      </Box>
+      {data && (
+        <Table striped highlightOnHover mt={48}>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Name+(Phone)</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.list.map((d, i) => (
+              <tr key={d.id}>
+                <td>{i + 1}</td>
+                <td>
+                  <p>{d.name}</p>
+                  <em>{d.phone}</em>
+                </td>
+                <td>{d.amount.toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+    </Box>
   );
 }
 

@@ -4,10 +4,10 @@ import {
   HttpLink,
   InMemoryCache,
 } from '@apollo/client';
-import styled from 'styled-components';
-import Footer from './footer/footer';
-import Header from './header/header';
-import Main from './main/main';
+import { AppShell, Footer, Header, MantineProvider } from '@mantine/core';
+import AppFooter from './footer/footer';
+import AppHeader from './header/header';
+import AppMain from './main/main';
 import { DonasiSumProvider } from './app.context';
 
 const client = new ApolloClient({
@@ -17,25 +17,49 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const StyledApp = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  font-family: sans-serif;
-  height: 100vh;
-  max-width: 768px;
-  margin: 0 auto;
-`;
-
 export function App() {
   return (
     <DonasiSumProvider>
       <ApolloProvider client={client}>
-        <StyledApp>
-          <Header />
-          <Main />
-          <Footer />
-        </StyledApp>
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <AppShell
+            footer={
+              <Footer
+                height={54}
+                sx={(theme) => ({
+                  backgroundColor: theme.colors.gray[0],
+                  borderTopColor: theme.colors.gray[2],
+                  borderTopStyle: 'solid',
+                  borderTopWidth: '1px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  paddingTop: '4px',
+                })}
+              >
+                <AppFooter></AppFooter>
+              </Footer>
+            }
+            header={
+              <Header
+                height={52}
+                sx={(theme) => ({
+                  alignItems: 'center',
+                  backgroundColor: theme.colors.teal[9],
+                  color: '#fff',
+                  display: 'flex',
+                  fontSize: '1.8rem',
+                  lineHeight: '52px',
+                  padding: '0 16px 2px',
+                })}
+              >
+                <AppHeader></AppHeader>
+              </Header>
+            }
+          >
+            <AppMain></AppMain>
+          </AppShell>
+        </MantineProvider>
       </ApolloProvider>
     </DonasiSumProvider>
   );

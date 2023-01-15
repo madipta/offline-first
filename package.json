@@ -37,6 +37,10 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.7",
+    "@emotion/react": "^11.10.5",
+    "@mantine/core": "^5.10.0",
+    "@mantine/form": "^5.10.0",
+    "@mantine/hooks": "^5.10.0",
     "@nestjs/apollo": "10.1.7",
     "@nestjs/common": "9.2.1",
     "@nestjs/config": "^2.2.0",
@@ -49,12 +53,10 @@
     "@storybook/manager-webpack5": "~6.4.5",
     "apollo-server-express": "3.9.0",
     "babel-polyfill": "^6.26.0",
-    "formik": "^2.2.6",
     "graphql": "^16.6.0",
     "graphql-tools": "^8.3.14",
     "nanoid": "4.0.0",
     "pg": "8.8.0",
-    "pouchdb-adapter-idb": "^7.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-is": "18.2.0",
@@ -62,7 +64,6 @@
     "reflect-metadata": "^0.1.13",
     "rxdb": "13.17.1",
     "rxjs": "7.8.0",
-    "styled-components": "5.3.6",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

@@ -1,43 +1,8 @@
+import { Box, Button, LoadingOverlay, Table, Text } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { useReducer, useState } from 'react';
-import styled from 'styled-components';
 import { DeleteDonasi, FindDonasi } from '../../data-access/local';
 import { useDonasiInsert } from '../../data-access/server';
-
-const StyledSync = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  place-content: center;
-  height: 100%;
-  h1 {
-    color: #307080;
-    font-size: 1.02rem;
-  }
-  button {
-    background-color: #f7402a;
-    color: #fff;
-    line-height: 1.85rem;
-    padding: 0.2rem 1rem;
-    border-radius: 0.15rem;
-    margin-top: 1.2rem;
-    margin-bottom: 1.2rem;
-  }
-  button[disabled] {
-    background-color: #d4d4d4;
-  }
-  p {
-    color: #666;
-    font-size: 0.8rem;
-  }
-  ul {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1.2rem;
-    li {
-      margin-bottom: 0.3rem;
-    }
-  }
-`;
 
 export function Sync() {
   const [count, setCount] = useReducer((c, cp) => (cp ? c + 1 : 0), 0);
@@ -45,43 +10,80 @@ export function Sync() {
     (old, val) => (val ? [...old, val] : []),
     []
   );
-  const [loading, setLoading] = useState(false);
+  const form = useForm({});
+  const [isLoading, setLoading] = useState(false);
   const [add] = useDonasiInsert();
-  const onSubmit = async () => {
-    setLoading(true);
-    const data = await FindDonasi({
-      selector: {},
-      sort: [{ createdAt: 'desc' }],
-    });
-    if (data && data.length) {
-      data.forEach(async (val, i) => {
-        const { id, name, phone, amount, createdAt } = val;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        await add({ variables: { id, name, phone, amount, createdAt } });
-        await DeleteDonasi(id);
-        setCount(1);
-        setSuccess({ id, name, phone, amount });
-      });
-    }
-    setLoading(false);
-  };
   return (
-    <StyledSync>
-      <h1>Sinkronisasi data ke server</h1>
-      <button onClick={() => onSubmit()} disabled={loading}>
-        Submit
-      </button>
-      <p>{count} data synced.</p>
-      <ul>
-        {success.map((d, i) => (
-          <li key={d.id}>
-            {d.name} {d.phone ? `(${d.phone})` : ''} ={' '}
-            {d.amount.toLocaleString()}
-          </li>
-        ))}
-      </ul>
-    </StyledSync>
+    <form
+      onSubmit={form.onSubmit(async (values, _event) => {
+        try {
+          setLoading(true);
+          const data = await FindDonasi({
+            selector: {},
+            sort: [{ createdAt: 'desc' }],
+          });
+          if (data && data.length) {
+            data.forEach(async (val, i) => {
+              const { id, name, phone, amount, createdAt } = val;
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              await add({
+                variables: { id, name, phone, amount, createdAt },
+              });
+              await DeleteDonasi(id);
+              setCount(1);
+              setSuccess({ id, name, phone, amount });
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      })}
+    >
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
+      <Box
+        sx={(theme) => ({
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          paddingTop: '24px',
+        })}
+      >
+        <Text color="gray.7" mb={24}>
+          Sinkronisasi data ke server
+        </Text>
+        <Button type="submit" color="red.7">
+          Submit
+        </Button>
+        <Text color="gray.7" mt={24}>
+          {count} data synced.
+        </Text>
+        {count > 0 && (
+          <Table striped highlightOnHover mt={24}>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Name+(Phone)</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {success.map((d, i) => (
+                <tr key={i + d.name}>
+                  <td>{i + 1}</td>
+                  <td>
+                    {d.name} {d.phone ? ` (${d.phone})` : ''}
+                  </td>
+                  <td>{d.amount.toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
+      </Box>
+    </form>
   );
 }
 

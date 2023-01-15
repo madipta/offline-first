@@ -1,12 +1,12 @@
+import { Table } from '@mantine/core';
 import { useContext, useEffect } from 'react';
 import { DonasiSumContext } from '../../app.context';
 import { useDonasiList } from '../../data-access/server';
-import ListItem from './list-item';
 
 export function ServerData() {
   const [getList, { data }] = useDonasiList();
   const sumContext = useContext(DonasiSumContext);
-  const { sum, setSum } = sumContext;
+  const { setSum } = sumContext;
   useEffect(() => {
     getList();
   }, [getList]);
@@ -22,11 +22,24 @@ export function ServerData() {
   }, [data, setSum]);
   if (!data) return <> </>;
   return (
-    <>
-      {data.list.map((d, i) => (
-        <ListItem key={d.id} donasi={d} index={i}></ListItem>
-      ))}
-    </>
+    <Table striped highlightOnHover>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name+(Phone)</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.list.map((d, i) => (
+          <tr key={i + d.name}>
+            <td>{i + 1}</td>
+            <td>{d.name} {d.phone ? ` (${d.phone})`: ""}</td>
+            <td>{d.amount}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   );
 }
 

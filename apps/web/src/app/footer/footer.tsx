@@ -1,97 +1,26 @@
-import { Route, Routes } from 'react-router-dom';
-import styled from 'styled-components';
-import LinkAdd from './link-add';
-import LinkHome from './link-home';
-import LinkSearch from './link-search';
-import LinkSync from './link-sync';
-import Summary from './summary';
-
-/* eslint-disable-next-line */
-export interface FooterProps {}
-
-const StyledFooter = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: #dddbcd;
-  border-style: solid;
-  border-color: #eaeaea;
-  border-width: 0px;
-  border-top-width: 1px;
-
-  > ul {
-    display: flex;
-    justify-content: center;
-    list-style-type: none;
-    padding: 0.12rem 0 0.25rem;
-
-    > li > a,
-    > li > .Link {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      place-items: center;
-      cursor: pointer;
-      color: #1b9aaa;
-      font-size: 0.7rem;
-      text-decoration: none;
-      width: 2rem;
-      margin: 0 1.05rem;
-    }
-  }
-`;
+import { Box } from '@mantine/core';
+import { ReactComponent as AddIcon } from '../icons/add.svg';
+import { ReactComponent as HomeIcon } from '../icons/home.svg';
+import { ReactComponent as SearchIcon } from '../icons/search.svg';
+import { ReactComponent as SyncIcon } from '../icons/sync.svg';
+import { Link } from './link';
 
 export function Footer() {
   return (
-    <StyledFooter>
-      <Summary></Summary>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ul>
-              <LinkHome show={false}></LinkHome>
-              <LinkAdd show={true}></LinkAdd>
-              <LinkSearch show={true}></LinkSearch>
-              <LinkSync show={true}></LinkSync>
-            </ul>
-          }
-        ></Route>
-        <Route
-          path="/add"
-          element={
-            <ul>
-              <LinkHome show={true}></LinkHome>
-              <LinkAdd show={false}></LinkAdd>
-              <LinkSearch show={true}></LinkSearch>
-              <LinkSync show={true}></LinkSync>
-            </ul>
-          }
-        ></Route>
-        <Route
-          path="/search"
-          element={
-            <ul>
-              <LinkHome show={true}></LinkHome>
-              <LinkAdd show={true}></LinkAdd>
-              <LinkSearch show={false}></LinkSearch>
-              <LinkSync show={true}></LinkSync>
-            </ul>
-          }
-        ></Route>
-        <Route
-          path="/sync"
-          element={
-            <ul>
-              <LinkHome show={true}></LinkHome>
-              <LinkAdd show={true}></LinkAdd>
-              <LinkSearch show={true}></LinkSearch>
-              <LinkSync show={false}></LinkSync>
-            </ul>
-          }
-        ></Route>
-      </Routes>
-    </StyledFooter>
+    <Box
+      component="nav"
+      sx={(theme) => ({
+        display: 'flex',
+        justifyContent: 'space-around',
+        margin: '0 auto',
+        width: '220px'
+      })}
+    >
+      <Link to="/" title="Home" icon={<HomeIcon></HomeIcon>}></Link>
+      <Link to="/add" title="Add" icon={<AddIcon></AddIcon>}></Link>
+      <Link to="/search" title="Search" icon={<SearchIcon></SearchIcon>}></Link>
+      <Link to="/sync" title="Sync" icon={<SyncIcon></SyncIcon>}></Link>
+    </Box>
   );
 }
 

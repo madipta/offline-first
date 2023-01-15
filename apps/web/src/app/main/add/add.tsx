@@ -1,130 +1,80 @@
-import styled from 'styled-components';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Box, Button, Group, LoadingOverlay, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useState } from 'react';
 import { InsertDonasi } from '../../data-access/local';
 
-const StyledAdd = styled.div`
-  margin-top: 2rem;
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-
-    > div {
-      margin-bottom: .7rem;
-
-      label {
-        display: flex;
-        align-items: center;
-        width: 100%;
-
-        b {
-          color: #08423d;
-          line-height: 1.85rem;
-          width: 5rem;
-          margin-right: 0.3rem;
-        }
-
-        input {
-          color: #222;
-          flex-grow: 1;
-          line-height: 1.85rem;
-          padding: 3px 6px;
-          border: 1px solid #cfd8d4;
-        }
-
-        input.number {
-          text-align: right;
-        }
-      }
-
-      .error {
-        color: #d23d2a;
-        text-align: right;
-        padding-right: 0.2rem;
-        margin-top: 0.4rem;
-      }
-    }
-
-    button {
-      cursor: pointer;
-      background-color: #f74a38;
-      color: #fff;
-      font-weight: 600;
-      line-height: 1.85rem;
-      padding: 0.2rem 1.1rem;
-      border-radius: 0.15rem;
-      margin-top: 1.2rem;
-    }
-
-    button[disabled] {
-      background-color: #ddd;
-    }
-  }
-`;
-
-type formError = {
-  name?: string;
-  amount?: string;
-};
-
 function Add() {
+  const [isLoading, setLoading] = useState(false);
+  const form = useForm({
+    initialValues: {
+      name: '',
+      phone: '',
+      amount: 10000,
+    },
+    validate: {
+      name: (value) => {
+        return value.trim().length < 3 ? 'Required, min: 3 chars' : null;
+      },
+      amount: (value) => {
+        return isNaN(value) || value < 100
+          ? 'Numeric Required, min: 100'
+          : null;
+      },
+    },
+  });
+
   return (
-    <StyledAdd>
-      <Formik
-        initialValues={{ name: '', phone: '', amount: 10000 }}
-        validate={(values) => {
-          const errors: formError = {};
-          const { name, amount } = values;
-          if (!name || name.trim().length < 3) {
-            errors.name = 'Required, min: 3 chars';
+    <Box
+      sx={(theme) => ({
+        maxWidth: '300px',
+        margin: '12px auto',
+      })}
+    >
+      <form
+        onSubmit={form.onSubmit(
+          async (values, _event) => {
+            try {
+              setLoading(true);
+              await InsertDonasi(values);
+              form.reset();
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setTimeout(() => {
+                setLoading(false);
+              }, 300);
+            }
+          },
+          (validationErrors, _values, _event) => {
+            console.log(validationErrors);
           }
-          if (!+amount || amount <= 100) {
-            errors.amount = 'Required, minimum Rp.100';
-          }
-          return errors;
-        }}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
-          try {
-            await InsertDonasi(values);
-          } catch (error) {
-            console.log(error);
-          } finally {
-            setSubmitting(false);
-            resetForm();
-          }
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div>
-              <label>
-                <b>Name</b>
-                <Field type="text" name="name" />
-              </label>
-              <ErrorMessage name="name" component="div" className="error" />
-            </div>
-            <div>
-              <label>
-                <b>Phone</b>
-                <Field type="text" name="phone" />
-              </label>
-            </div>
-            <div>
-              <label>
-                <b>Amount</b>
-                <Field type="text" name="amount" className="number" />
-              </label>
-              <ErrorMessage name="amount" component="div" className="error" />
-            </div>
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
         )}
-      </Formik>
-    </StyledAdd>
+      >
+        <LoadingOverlay visible={isLoading} overlayBlur={2} />
+        <TextInput
+          withAsterisk
+          label="Name"
+          placeholder="John Doe"
+          {...form.getInputProps('name')}
+        />
+        <TextInput
+          label="Phone"
+          placeholder="080000000xx"
+          {...form.getInputProps('phone')}
+        />
+        <TextInput
+          withAsterisk
+          label="Amount"
+          placeholder="123"
+          {...form.getInputProps('amount')}
+        />
+        <Group position="center" mt="24px">
+          <Button type="submit" color="red.7">
+            Submit
+          </Button>
+        </Group>
+      </form>
+    </Box>
   );
 }
 
