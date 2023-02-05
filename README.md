@@ -1,33 +1,37 @@
 # Offline
 
-Sample offline first using Nx monorepo, React, RxDb, NestJs, Prisma, GraphQl, PostgreSql
+Sample offline first using Nx monorepo, React, Mantine, RxDb, NestJs, Prisma, GraphQl, PostgreSql
 
 ## Install
 
-install nx cli globaly
-`npm install -g nx`
+clone this repo `git clone https://github.com/madipta/offline-first.git`
+
+goto folder
+`cd offline-first`
 
 install node_modules packages
-`npm install or yarn`
+`npm install` or `yarn`
 
-install postgreSql https://www.postgresql.org/download/ or using docker https://hub.docker.com/_/postgres then `set DATABASE_URL on .env file`
+run postgresql using docker
+`docker-compose up`
 
-make sure database service is running beofre generate database
+make sure database service is running before generate database
 
-generate database
-`npm run migrate:dev`  
+then generate database
+`npm run migrate:dev` or `yarn run migrate:dev`
 
-generate prismagraphql
-`npm run prisma:generate`  
+generate prisma client
+`npm run prisma:generate` or `yarn run prisma:generate`  
 
 ## How to Run
 
-run React web server
-`nx serve`
-
 run nest api server
-`nx serve api`
+`npx nx serve api` or `yarn nx serve api`
 
+run React web server
+`npx nx serve` or `yarn nx serve`
+
+open browser http://localhost:4200
 
 <p>
   <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-01-min.png" width="150">
