@@ -34,8 +34,6 @@ run React web server
 open browser http://localhost:4200
 
 <p>
-  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-01-min.png" width="150">
-  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-03-min.png" width="150">
-  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-02-min.png" width="150">
-  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/screenshot-04-min.png" width="150">
+  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/1.png" width="830">
+  <img src="https://raw.githubusercontent.com/madipta/offline-first/master/screenshot/2.png" width="830">
 </p>
