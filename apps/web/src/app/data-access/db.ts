@@ -1,5 +1,5 @@
 import { addRxPlugin, createRxDatabase } from 'rxdb';
-import { getRxStorageDexie } from 'rxdb/plugins/dexie';
+import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 import { DonasiSchema } from './donasi.schema';
 
