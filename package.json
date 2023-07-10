@@ -38,7 +38,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.12",
     "@apollo/server": "^4.7.0",
-    "@emotion/react": "^11.10.6",
+    "@emotion/react": "^11.11.1",
     "@mantine/core": "^6.0.8",
     "@mantine/form": "^6.0.8",
     "@mantine/hooks": "^6.0.8",
