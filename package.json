@@ -60,7 +60,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-is": "18.2.0",
-    "react-router-dom": "6.9.0",
+    "react-router-dom": "6.14.1",
     "reflect-metadata": "^0.1.13",
     "rxdb": "14.2.3",
     "rxjs": "7.8.0",
