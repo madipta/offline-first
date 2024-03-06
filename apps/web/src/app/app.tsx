@@ -1,14 +1,14 @@
 import {
   ApolloClient,
-  ApolloProvider,
   HttpLink,
   InMemoryCache,
+  ApolloProvider,
 } from '@apollo/client';
-import { AppShell, Footer, Header, MantineProvider } from '@mantine/core';
+import { MantineProvider, AppShell, Footer, Header } from '@mantine/core';
+import { DonasiSumProvider } from './app.context';
 import AppFooter from './footer/footer';
 import AppHeader from './header/header';
 import AppMain from './main/main';
-import { DonasiSumProvider } from './app.context';
 
 const client = new ApolloClient({
   link: new HttpLink({

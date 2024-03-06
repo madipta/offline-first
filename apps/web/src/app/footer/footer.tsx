@@ -1,8 +1,8 @@
 import { Box } from '@mantine/core';
-import { ReactComponent as AddIcon } from '../icons/add.svg';
-import { ReactComponent as HomeIcon } from '../icons/home.svg';
-import { ReactComponent as SearchIcon } from '../icons/search.svg';
-import { ReactComponent as SyncIcon } from '../icons/sync.svg';
+import AddIcon from '../icons/add.svg';
+import HomeIcon from '../icons/home.svg';
+import SearchIcon from '../icons/search.svg';
+import SyncIcon from '../icons/sync.svg';
 import { Link } from './link';
 
 export function Footer() {
@@ -13,7 +13,7 @@ export function Footer() {
         display: 'flex',
         justifyContent: 'space-around',
         margin: '0 auto',
-        width: '220px'
+        width: '220px',
       })}
     >
       <Link to="/" title="Home" icon={<HomeIcon></HomeIcon>}></Link>

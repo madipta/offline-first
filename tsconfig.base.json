@@ -10,13 +10,12 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@offline-first/gql": ["libs/gql/src/index.ts"],
-      "@offline-first/interfaces": ["libs/interfaces/src/index.ts"],
       "@offline-first/services": ["libs/services/src/index.ts"]
     }
   },
