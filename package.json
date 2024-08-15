@@ -100,7 +100,7 @@
     "@nestjs/graphql": "^12.1.1",
     "@nestjs/platform-express": "^10.0.2",
     "@prisma/client": "^5.10.2",
-    "axios": "^1.6.0",
+    "axios": "^1.7.4",
     "graphql": "^16.8.1",
     "graphql-tools": "^9.0.1",
     "nanoid": "^5.0.6",
